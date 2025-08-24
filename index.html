@@ -40,11 +40,14 @@
             border-radius: 50%;
         }
         @media (max-width: 768px) {
-            .grid-cols-12 {
-                grid-template-columns: 1fr;
+            .desktop-layout {
+                flex-direction: column !important;
             }
-            .col-span-4, .col-span-8 {
-                grid-column: span 1;
+            .chart-container {
+                height: 500px !important;
+            }
+            .correlation-chart {
+                height: 400px !important;
             }
         }
     </style>
@@ -53,47 +56,47 @@
     <div class="container mx-auto px-4 py-6">
         <!-- Header -->
         <div class="gradient-bg text-white rounded-lg p-6 mb-6 card-shadow">
-            <h1 class="text-3xl font-bold mb-2"><i class="fas fa-code mr-3"></i>IT・SaaS業界 戦略バランスボード</h1>
+            <h1 class="text-3xl font-bold mb-2"><i class="fas fa-chess-board mr-3"></i>IT・SaaS業界 戦略バランスボード</h1>
             <p class="text-lg opacity-90">プロダクト・マーケット・フィット×ユニットエコノミクス分析</p>
         </div>
 
         <!-- Main Content -->
-        <div class="grid grid-cols-12 gap-6">
+        <div class="desktop-layout flex flex-col lg:flex-row gap-6">
             <!-- Control Panel -->
-            <div class="col-span-12 md:col-span-4 space-y-4">
+            <div class="w-full lg:w-1/3 space-y-4">
                 <div class="bg-white rounded-lg p-6 card-shadow">
                     <h2 class="text-xl font-bold mb-4 text-gray-800"><i class="fas fa-sliders-h mr-2"></i>要素調整パネル</h2>
                     
                     <div class="space-y-6">
                         <div class="slider-container">
                             <label class="block text-sm font-medium text-gray-700 mb-2">プロダクト品質</label>
-                            <input type="range" min="1" max="100" value="70" class="slider" id="product">
+                            <input type="range" min="1" max="100" value="70" class="slider" id="product-quality">
                             <div class="flex justify-between text-xs text-gray-500 mt-1">
-                                <span>MVP</span><span id="productValue">70</span><span>完成</span>
+                                <span>MVP</span><span id="productQualityValue">70</span><span>完璧</span>
                             </div>
                         </div>
 
                         <div class="slider-container">
                             <label class="block text-sm font-medium text-gray-700 mb-2">開発効率</label>
-                            <input type="range" min="1" max="100" value="65" class="slider" id="development">
+                            <input type="range" min="1" max="100" value="65" class="slider" id="dev-efficiency">
                             <div class="flex justify-between text-xs text-gray-500 mt-1">
-                                <span>低速</span><span id="developmentValue">65</span><span>高速</span>
+                                <span>低速</span><span id="devEfficiencyValue">65</span><span>高速</span>
                             </div>
                         </div>
 
                         <div class="slider-container">
                             <label class="block text-sm font-medium text-gray-700 mb-2">CAC効率</label>
-                            <input type="range" min="1" max="100" value="60" class="slider" id="cac">
+                            <input type="range" min="1" max="100" value="60" class="slider" id="cac-efficiency">
                             <div class="flex justify-between text-xs text-gray-500 mt-1">
-                                <span>高コスト</span><span id="cacValue">60</span><span>効率的</span>
+                                <span>高コスト</span><span id="cacEfficiencyValue">60</span><span>効率的</span>
                             </div>
                         </div>
 
                         <div class="slider-container">
                             <label class="block text-sm font-medium text-gray-700 mb-2">LTV最大化</label>
-                            <input type="range" min="1" max="100" value="70" class="slider" id="ltv">
+                            <input type="range" min="1" max="100" value="70" class="slider" id="ltv-max">
                             <div class="flex justify-between text-xs text-gray-500 mt-1">
-                                <span>低LTV</span><span id="ltvValue">70</span><span>高LTV</span>
+                                <span>低LTV</span><span id="ltvMaxValue">70</span><span>高LTV</span>
                             </div>
                         </div>
 
@@ -107,20 +110,26 @@
                     </div>
                 </div>
 
-                <!-- Success Indicator -->
+                <!-- PMF Success Indicator -->
                 <div class="bg-white rounded-lg p-6 card-shadow">
                     <h3 class="text-lg font-bold mb-4 text-gray-800"><i class="fas fa-rocket mr-2"></i>PMF達成確率</h3>
                     <div class="flex items-center justify-center mb-4">
                         <div class="w-24 h-24 success-meter flex items-center justify-center relative">
-                            <span class="text-2xl font-bold text-white z-10" id="successRate">68%</span>
+                            <span class="text-2xl font-bold text-white z-10" id="pmfRate">72%</span>
                         </div>
                     </div>
-                    <div class="text-center">
-                        <span class="inline-block px-3 py-1 rounded-full text-sm font-medium" id="successLabel">良好</span>
+                    <div class="text-center mb-4">
+                        <span class="inline-block px-3 py-1 rounded-full text-sm font-medium" id="pmfLabel">良好</span>
                     </div>
-                    <div class="mt-3 text-xs text-gray-600">
-                        <div>LTV/CAC比率: <span id="ltvCacRatio">3.4x</span></div>
-                        <div>予想MRR成長: <span id="mrrGrowth">+12%</span></div>
+                    <div class="text-sm text-gray-600">
+                        <div class="flex justify-between">
+                            <span>LTV/CAC比率:</span>
+                            <span id="ltvCacRatio">3.4x</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>予想MRR成長:</span>
+                            <span id="mrrGrowth">+12%</span>
+                        </div>
                     </div>
                 </div>
 
@@ -129,7 +138,7 @@
                     <h3 class="text-lg font-bold mb-4 text-gray-800"><i class="fas fa-save mr-2"></i>シナリオ管理</h3>
                     <div class="space-y-2">
                         <button class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" onclick="saveScenario()">
-                            <i class="fas fa-plus mr-2"></i>現在のシナリオを保存
+                            <i class="fas fa-plus mr-2"></i>現在を保存
                         </button>
                         <select class="w-full border rounded px-3 py-2" id="scenarioSelect" onchange="loadScenario()">
                             <option value="">保存済みシナリオを選択</option>
@@ -142,11 +151,11 @@
             </div>
 
             <!-- Visualization Panel -->
-            <div class="col-span-12 md:col-span-8 space-y-4">
+            <div class="w-full lg:w-2/3 space-y-4">
                 <!-- Balance Board -->
                 <div class="bg-white rounded-lg p-6 card-shadow">
                     <h2 class="text-xl font-bold mb-4 text-gray-800"><i class="fas fa-chart-radar mr-2"></i>SaaS戦略マップ</h2>
-                    <div class="relative" style="height: 400px;">
+                    <div class="chart-container" style="height: 400px;">
                         <canvas id="balanceChart"></canvas>
                     </div>
                 </div>
@@ -154,7 +163,7 @@
                 <!-- Correlation Matrix -->
                 <div class="bg-white rounded-lg p-6 card-shadow">
                     <h2 class="text-xl font-bold mb-4 text-gray-800"><i class="fas fa-chart-bar mr-2"></i>ユニットエコノミクス分析</h2>
-                    <div class="relative" style="height: 300px;">
+                    <div class="correlation-chart" style="height: 300px;">
                         <canvas id="correlationChart"></canvas>
                     </div>
                 </div>
@@ -168,12 +177,12 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Footer -->
-        <div class="text-center mt-8 text-gray-500 text-sm">
-            <p>© 2025 DEARS CONSULTING. All Rights Reserved.</p>
-            <p class="mt-1">IT・SaaS業界特化型戦略分析ツール</p>
-        </div>
+    <!-- Footer -->
+    <div class="text-center py-6 text-gray-600">
+        © 2025 DEARS CONSULTING. All Rights Reserved.<br>
+        IT・SaaS業界特化戦略分析ツール
     </div>
 
     <script>
@@ -207,7 +216,10 @@
                         r: {
                             angleLines: { display: true },
                             suggestedMin: 0,
-                            suggestedMax: 100
+                            suggestedMax: 100,
+                            ticks: {
+                                stepSize: 20
+                            }
                         }
                     },
                     plugins: {
@@ -223,8 +235,8 @@
                 data: {
                     labels: ['CAC', 'LTV', 'MRR成長', 'チャーン率', 'ARR', 'バーンレート'],
                     datasets: [{
-                        label: '指標値',
-                        data: [80, 120, 15, -5, 600, 350],
+                        label: '相対値',
+                        data: [60, 100, 80, -40, 580, -120],
                         backgroundColor: [
                             'rgba(239, 68, 68, 0.7)',
                             'rgba(16, 185, 129, 0.7)',
@@ -247,6 +259,13 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            min: -200,
+                            max: 600
+                        }
+                    },
                     plugins: {
                         legend: { display: false }
                     }
@@ -254,126 +273,160 @@
             });
         }
 
-        // Calculate profitability based on SaaS metrics
-        function calculateProfitability(product, development, cac, ltv, scalability) {
-            const productMarketFit = (product * ltv) / 10000;
-            const developmentEfficiency = development * 0.7;
-            const customerAcquisition = (101 - cac) * 0.6;
-            const scaleAdvantage = scalability * 0.5;
+        // Calculate PMF probability based on all factors
+        function calculatePMFProbability(productQuality, devEfficiency, cacEfficiency, ltvMax, scalability) {
+            // PMF達成確率の正確な計算式
+            const pmfScore = (productQuality * 0.30) + (cacEfficiency * 0.25) + (ltvMax * 0.25) + (devEfficiency * 0.20);
+            
+            // スケーラビリティボーナス
+            const scalabilityBonus = scalability * 0.1;
+            
+            const finalScore = Math.min(100, Math.max(0, pmfScore + scalabilityBonus));
+            
+            return Math.round(finalScore);
+        }
+
+        // Calculate profitability
+        function calculateProfitability(productQuality, devEfficiency, cacEfficiency, ltvMax, scalability) {
+            // LTV/CAC比率をベースとした収益性計算
+            const ltvCacRatio = (ltvMax / (101 - cacEfficiency)) * 2;
+            const efficiencyFactor = (devEfficiency + scalability) / 200;
+            const qualityPremium = productQuality * 0.5;
             
             const profitability = Math.min(100, Math.max(0, 
-                (productMarketFit * 30 + 
-                 developmentEfficiency * 25 + 
-                 customerAcquisition * 25 + 
-                 scaleAdvantage * 20)
+                (ltvCacRatio * 15) + (efficiencyFactor * 30) + (qualityPremium * 0.4)
             ));
             
             return Math.round(profitability);
         }
 
+        // Calculate LTV/CAC ratio
+        function calculateLTVCACRatio(cacEfficiency, ltvMax) {
+            const cacValue = 101 - cacEfficiency; // Higher efficiency = lower CAC
+            const ltvValue = ltvMax;
+            const ratio = (ltvValue / cacValue) * 5; // Scale for realistic ratio
+            return Math.max(1, ratio).toFixed(1) + 'x';
+        }
+
+        // Calculate MRR growth
+        function calculateMRRGrowth(productQuality, devEfficiency, ltvMax) {
+            const baseGrowth = (productQuality + devEfficiency + ltvMax) / 300 * 100;
+            const growth = Math.max(-50, Math.min(200, baseGrowth - 20)); // Range: -50% to 200%
+            return (growth >= 0 ? '+' : '') + Math.round(growth) + '%';
+        }
+
         // Update all visualizations
         function updateVisualizations() {
-            const product = parseInt(document.getElementById('product').value);
-            const development = parseInt(document.getElementById('development').value);
-            const cac = parseInt(document.getElementById('cac').value);
-            const ltv = parseInt(document.getElementById('ltv').value);
+            const productQuality = parseInt(document.getElementById('product-quality').value);
+            const devEfficiency = parseInt(document.getElementById('dev-efficiency').value);
+            const cacEfficiency = parseInt(document.getElementById('cac-efficiency').value);
+            const ltvMax = parseInt(document.getElementById('ltv-max').value);
             const scalability = parseInt(document.getElementById('scalability').value);
             
-            const profitability = calculateProfitability(product, development, cac, ltv, scalability);
+            const profitability = calculateProfitability(productQuality, devEfficiency, cacEfficiency, ltvMax, scalability);
+            const pmfProbability = calculatePMFProbability(productQuality, devEfficiency, cacEfficiency, ltvMax, scalability);
             
             // Update value displays
-            document.getElementById('productValue').textContent = product;
-            document.getElementById('developmentValue').textContent = development;
-            document.getElementById('cacValue').textContent = cac;
-            document.getElementById('ltvValue').textContent = ltv;
+            document.getElementById('productQualityValue').textContent = productQuality;
+            document.getElementById('devEfficiencyValue').textContent = devEfficiency;
+            document.getElementById('cacEfficiencyValue').textContent = cacEfficiency;
+            document.getElementById('ltvMaxValue').textContent = ltvMax;
             document.getElementById('scalabilityValue').textContent = scalability;
             
             // Update balance chart
-            balanceChart.data.datasets[0].data = [product, development, cac, ltv, scalability, profitability];
+            balanceChart.data.datasets[0].data = [productQuality, devEfficiency, cacEfficiency, ltvMax, scalability, profitability];
             balanceChart.update();
             
-            // Update correlation data - SaaS specific metrics
-            const cacValue = Math.round(120 - (cac * 0.8));
-            const ltvValue = Math.round(ltv * 1.5);
-            const mrrGrowth = Math.round((product + development + scalability) / 10);
-            const churnRate = Math.round((101 - ltv) * 0.1);
-            const arrValue = Math.round(ltvValue * 8);
-            const burnRate = Math.round(400 - (development * 2));
+            // Update correlation data (SaaS metrics)
+            const cacValue = 101 - cacEfficiency; // Lower is better for CAC
+            const ltvValue = ltvMax * 10; // Scale for display
+            const mrrGrowth = (productQuality + devEfficiency + ltvMax) / 3 * 8 - 200; // -200 to +400 range
+            const churnRate = -(100 - productQuality - ltvMax/2) * 2; // Negative value
+            const arrValue = ltvValue * 6; // Annual Recurring Revenue
+            const burnRate = -cacValue * 2; // Negative value (cost)
             
-            correlationChart.data.datasets[0].data = [cacValue, ltvValue, mrrGrowth, -churnRate, arrValue, burnRate];
+            correlationChart.data.datasets[0].data = [cacValue, ltvValue, mrrGrowth, churnRate, arrValue, burnRate];
             correlationChart.update();
             
-            // Update success rate (PMF probability)
-            const pmfRate = Math.round((product + ltv + scalability) / 3);
-            document.getElementById('successRate').textContent = pmfRate + '%';
+            // Update PMF probability
+            document.getElementById('pmfRate').textContent = pmfProbability + '%';
             
-            // Update LTV/CAC ratio
-            const ltvCacRatio = (ltvValue / cacValue).toFixed(1);
-            document.getElementById('ltvCacRatio').textContent = ltvCacRatio + 'x';
-            document.getElementById('mrrGrowth').textContent = '+' + mrrGrowth + '%';
-            
-            const successLabel = document.getElementById('successLabel');
-            if (pmfRate >= 80) {
-                successLabel.textContent = 'PMF達成';
-                successLabel.className = 'inline-block px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800';
-            } else if (pmfRate >= 60) {
-                successLabel.textContent = '良好';
-                successLabel.className = 'inline-block px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800';
+            const pmfLabel = document.getElementById('pmfLabel');
+            if (pmfProbability >= 80) {
+                pmfLabel.textContent = 'PMF達成';
+                pmfLabel.className = 'inline-block px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800';
+            } else if (pmfProbability >= 60) {
+                pmfLabel.textContent = '良好';
+                pmfLabel.className = 'inline-block px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800';
             } else {
-                successLabel.textContent = '要改善';
-                successLabel.className = 'inline-block px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800';
+                pmfLabel.textContent = '要改善';
+                pmfLabel.className = 'inline-block px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800';
             }
             
+            // Update LTV/CAC ratio and MRR growth
+            document.getElementById('ltvCacRatio').textContent = calculateLTVCACRatio(cacEfficiency, ltvMax);
+            document.getElementById('mrrGrowth').textContent = calculateMRRGrowth(productQuality, devEfficiency, ltvMax);
+            
             // Update recommendations
-            updateRecommendations(product, development, cac, ltv, scalability, profitability);
+            updateRecommendations(productQuality, devEfficiency, cacEfficiency, ltvMax, scalability, pmfProbability);
         }
 
-        // Generate SaaS specific recommendations
-        function updateRecommendations(product, development, cac, ltv, scalability, profitability) {
+        // Generate strategic recommendations
+        function updateRecommendations(productQuality, devEfficiency, cacEfficiency, ltvMax, scalability, pmfProbability) {
             const recommendations = [];
             
-            if (ltvValue / cacValue < 3) {
+            if (pmfProbability < 50) {
                 recommendations.push({
                     icon: 'fas fa-exclamation-triangle',
                     type: 'warning',
-                    title: 'LTV/CAC比率改善が急務',
-                    text: 'ユニットエコノミクスが悪化しています。CAC削減またはLTV向上が必要です。'
+                    title: 'PMF達成が急務',
+                    text: 'プロダクト品質とCAC効率の改善に集中してください。'
                 });
             }
             
-            if (product > 80 && scalability < 50) {
+            if (productQuality > 80 && cacEfficiency < 40) {
+                recommendations.push({
+                    icon: 'fas fa-bullseye',
+                    type: 'warning',
+                    title: 'マーケティング効率化',
+                    text: '優秀なプロダクトを活かし、CAC効率を改善してスケールを狙いましょう。'
+                });
+            }
+            
+            if (ltvMax > 70 && cacEfficiency > 70) {
+                recommendations.push({
+                    icon: 'fas fa-rocket',
+                    type: 'success',
+                    title: 'スケール準備完了',
+                    text: '優秀なユニットエコノミクス！積極的な成長投資のタイミングです。'
+                });
+            }
+            
+            if (devEfficiency < 50) {
+                recommendations.push({
+                    icon: 'fas fa-cogs',
+                    type: 'info',
+                    title: '開発プロセス改善',
+                    text: 'DevOps、CI/CD導入で開発効率を向上させ、市場投入速度を上げましょう。'
+                });
+            }
+            
+            if (scalability < 40 && pmfProbability > 70) {
                 recommendations.push({
                     icon: 'fas fa-expand-arrows-alt',
-                    type: 'info',
-                    title: 'スケーラビリティ強化を推奨',
-                    text: '高品質なプロダクトを活かすため、スケール体制の構築を優先してください。'
-                });
-            }
-            
-            if (development < 50) {
-                recommendations.push({
-                    icon: 'fas fa-code',
                     type: 'warning',
-                    title: '開発効率の改善が必要',
-                    text: '市場投入速度が競合に劣っています。開発プロセスの最適化を検討してください。'
+                    title: 'インフラ強化必要',
+                    text: 'PMFに近づいています。スケーラビリティ向上で成長に備えてください。'
                 });
             }
             
-            if (ltv > 70 && cac > 70) {
-                recommendations.push({
-                    icon: 'fas fa-dollar-sign',
-                    type: 'success',
-                    title: '高価値顧客獲得戦略',
-                    text: '高LTV顧客を維持しながら、CAC効率化でさらなる成長を目指せます。'
-                });
-            }
-            
-            if (scalability > 80 && profitability < 60) {
+            const ltvCacRatio = parseFloat(calculateLTVCACRatio(cacEfficiency, ltvMax));
+            if (ltvCacRatio < 3.0) {
                 recommendations.push({
                     icon: 'fas fa-chart-line',
-                    type: 'info',
-                    title: 'マネタイゼーション最適化',
-                    text: 'スケール基盤は整備済み。収益化モデルの見直しで利益率向上が可能です。'
+                    type: 'warning',
+                    title: 'ユニットエコノミクス改善',
+                    text: 'LTV/CAC比率3.0以上を目指し、持続的成長モデルを構築してください。'
                 });
             }
             
@@ -403,10 +456,10 @@
                 name: name,
                 timestamp: new Date().toLocaleString(),
                 values: {
-                    product: parseInt(document.getElementById('product').value),
-                    development: parseInt(document.getElementById('development').value),
-                    cac: parseInt(document.getElementById('cac').value),
-                    ltv: parseInt(document.getElementById('ltv').value),
+                    productQuality: parseInt(document.getElementById('product-quality').value),
+                    devEfficiency: parseInt(document.getElementById('dev-efficiency').value),
+                    cacEfficiency: parseInt(document.getElementById('cac-efficiency').value),
+                    ltvMax: parseInt(document.getElementById('ltv-max').value),
                     scalability: parseInt(document.getElementById('scalability').value)
                 }
             };
@@ -423,10 +476,10 @@
             
             if (selectedIndex >= 0 && scenarios[selectedIndex]) {
                 const scenario = scenarios[selectedIndex];
-                document.getElementById('product').value = scenario.values.product;
-                document.getElementById('development').value = scenario.values.development;
-                document.getElementById('cac').value = scenario.values.cac;
-                document.getElementById('ltv').value = scenario.values.ltv;
+                document.getElementById('product-quality').value = scenario.values.productQuality;
+                document.getElementById('dev-efficiency').value = scenario.values.devEfficiency;
+                document.getElementById('cac-efficiency').value = scenario.values.cacEfficiency;
+                document.getElementById('ltv-max').value = scenario.values.ltvMax;
                 document.getElementById('scalability').value = scenario.values.scalability;
                 updateVisualizations();
             }
@@ -456,61 +509,21 @@
         document.addEventListener('DOMContentLoaded', function() {
             initCharts();
             updateScenarioSelect();
-            updateVisualizationsInitial();
+            updateVisualizations();
             
             // Add event listeners to all sliders
-            ['product', 'development', 'cac', 'ltv', 'scalability'].forEach(id => {
+            ['product-quality', 'dev-efficiency', 'cac-efficiency', 'ltv-max', 'scalability'].forEach(id => {
                 document.getElementById(id).addEventListener('input', updateVisualizations);
             });
         });
-
-        // Initial update with proper values
-        function updateVisualizationsInitial() {
-            const product = 70;
-            const development = 65;
-            const cac = 60;
-            const ltv = 70;
-            const scalability = 55;
-            
-            const profitability = calculateProfitability(product, development, cac, ltv, scalability);
-            
-            // Update value displays
-            document.getElementById('productValue').textContent = product;
-            document.getElementById('developmentValue').textContent = development;
-            document.getElementById('cacValue').textContent = cac;
-            document.getElementById('ltvValue').textContent = ltv;
-            document.getElementById('scalabilityValue').textContent = scalability;
-            
-            // Update balance chart
-            balanceChart.data.datasets[0].data = [product, development, cac, ltv, scalability, profitability];
-            balanceChart.update();
-            
-            // Update success rate
-            const pmfRate = Math.round((product + ltv + scalability) / 3);
-            document.getElementById('successRate').textContent = pmfRate + '%';
-            
-            const successLabel = document.getElementById('successLabel');
-            if (pmfRate >= 80) {
-                successLabel.textContent = 'PMF達成';
-                successLabel.className = 'inline-block px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800';
-            } else if (pmfRate >= 60) {
-                successLabel.textContent = '良好';
-                successLabel.className = 'inline-block px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800';
-            } else {
-                successLabel.textContent = '要改善';
-                successLabel.className = 'inline-block px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800';
-            }
-            
-            updateRecommendations(product, development, cac, ltv, scalability, profitability);
-        }
     </script>
 </body>
 </html>
     <script id="html_badge_script1">
         window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
-            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDp2pgKG3Mur%2BWlC7PEoq%2FAOn7H8ywSnPrRdbk03TZkhyDVCCgC9vLoe9P9npek%2F7eoX0Tgj5FM3wffxWn%2F6s5JTpS%2BAunUy4SDJ2EYQVylOIWh8%2Fem8m5Q1OXXkaw09gWloYS%2BJhI61iSzXF1TZIhXXWTf9prLNV9YoYRqV2o%2BAGkNgtCLS2uGpz0AxKYtfPiX98jgjxW%2FZ1UJsxtuKmdhKmP1IxVUZbwrn2RwSJlFbNXLod8c%2Bmf9mSDbDCACKsKsZcNz0Boa3RwkljEM%2F70POArEdaqhCIc%2BYyNGtMlJJyXgz3Lvl3%2FMYeoVRE%2FHnAmU%2BvUPuKfgXK4CYW%2BMiXcXf%2FauW8GE8DTTOZxycs1m9Xl%2BUj%2FMVQWK3zkDsyaZdj3cfBVWUDU2F%2F4%2F7UarrvXrRqEOP5buVfiQ%2F3ECfDMHkUiLbQAdfVNczjOYaW2rvXIyQz6YaPMLGDPF%2BqAqCGSlzMoe6HV4tu489kZLlylRlaSiS4CW2MeaUA8CfBpSSV7LR%2FfQ3sTT1ALf7uwstGezo%3D";
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDj3hnTmx5XHUgmgmzTVVLVYK2brTL21vSWFJzMt%2FqPPbQeMKsF0Uj4Vciu0l%2FgFJHaWqLWtCKQJYueJS9aZnihW5neUGVHBrv2fHqKwtLk0x8sI8tbAGzd6EcAGEHX1BO3qrzDtYOFuI2c7YTqFp9MaAoWr7r3PtsZ1adzcgz3EzWgY4RY8mOPmXtWYvFacLaM9gApXX%2B5vswMnKUycMT3l2NtlxJlg%2FFVTF73koAfihotWurMiCQJqHuRPvV9Sc3cKMtVY0j5J6Cxav5T7UPcAvMQPgHn7xEPDEsAcmrmuLrRHBd7nC3LOa3zgQc9lZW63i2Tpj7M6HiagFW7BWnAReFYPkc1kkpkeyGcQuWDyzcVeSu5az6PgVbvuN0hJO%2B8Li9%2B9VtGIDZIAQTDbpzl8%2FfCJwGR5Hv3tSYfz3%2F7n9EvH0qOYrnxlU%2FLtkNDPU91U8LK%2B9S3hFzHnUPIpOJiJjAPVuS%2By7%2FzJUTk%2BWOjubga6R24rSLm9p%2Fxb%2BkGUFhVEWk7RUSmXcxayEiacuQcEYsfm9u1DSKkpMJBmRfZ6B";
         window.__genspark_locale = "ja-JP";
-        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDp2pgKG3Mur+WlC7PEoq/AOn7H8ywSnPrRdbk03TZkhyDVCCgC9vLoe9P9npek/7eoX0Tgj5FM3wffxWn/6s5JTpS+AunUy4SDJ2EYQVylOIWh8/em8m5Q1OXXkaw09gWloYS+JhI61iSzXF1TZIhXXWTf9prLNV9YoYRqV2o+AGkNgtCLS2uGpz0AxKYtfPiX98jgjxW/Z1UJsxtuKmdhKmP1IxVUZbwrn2RwSJlFbNXLod8c+mf9mSDbDCACKsKsZcNz0Boa3RwkljEM/70POArEdaqhCIc+YyNGtMlJJyXgz3Lvl3/MYeoVRE/HnAmU+vUPuKfgXK4CYW+MiXcXf/auW8GE8DTTOZxycs1m9Xl+Uj/MVQWK3zkDsyaZdj3cfBVWUDU2F/4/7UarrvXrRqEOP5buVfiQ/3ECfDMHkUiLbQAdfVNczjOYaW2rvXIyQz6YaPMLGDPF+qAqCGSlzMoe6HV4tu489kZLlylRlaSiS4CW2MeaUA8CfBpSSV7LR/fQ3sTT1ALf7uwstGezo=";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDj3hnTmx5XHUgmgmzTVVLVYK2brTL21vSWFJzMt/qPPbQeMKsF0Uj4Vciu0l/gFJHaWqLWtCKQJYueJS9aZnihW5neUGVHBrv2fHqKwtLk0x8sI8tbAGzd6EcAGEHX1BO3qrzDtYOFuI2c7YTqFp9MaAoWr7r3PtsZ1adzcgz3EzWgY4RY8mOPmXtWYvFacLaM9gApXX+5vswMnKUycMT3l2NtlxJlg/FVTF73koAfihotWurMiCQJqHuRPvV9Sc3cKMtVY0j5J6Cxav5T7UPcAvMQPgHn7xEPDEsAcmrmuLrRHBd7nC3LOa3zgQc9lZW63i2Tpj7M6HiagFW7BWnAReFYPkc1kkpkeyGcQuWDyzcVeSu5az6PgVbvuN0hJO+8Li9+9VtGIDZIAQTDbpzl8/fCJwGR5Hv3tSYfz3/7n9EvH0qOYrnxlU/LtkNDPU91U8LK+9S3hFzHnUPIpOJiJjAPVuS+y7/zJUTk+WOjubga6R24rSLm9p/xb+kGUFhVEWk7RUSmXcxayEiacuQcEYsfm9u1DSKkpMJBmRfZ6B";
     </script>
     
     <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
