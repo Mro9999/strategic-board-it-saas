@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .gradient-bg {
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
         .card-shadow {
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
@@ -20,95 +20,61 @@
         .slider {
             -webkit-appearance: none;
             width: 100%;
-            height: 8px;
-            border-radius: 4px;
+            height: 6px;
+            border-radius: 3px;
             background: #ddd;
             outline: none;
-            touch-action: manipulation;
         }
         .slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 28px;
-            height: 28px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
-            background: #3b82f6;
+            background: #4f46e5;
             cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-        }
-        .slider::-moz-range-thumb {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: #3b82f6;
-            cursor: pointer;
-            border: none;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
         .success-meter {
             background: conic-gradient(from 0deg, #ef4444 0deg, #f59e0b 120deg, #10b981 240deg, #10b981 360deg);
             border-radius: 50%;
         }
-        
-        /* モバイル最適化 */
         @media (max-width: 768px) {
-            .mobile-full {
-                width: 100% !important;
-                margin-bottom: 1rem;
+            .grid-cols-12 {
+                grid-template-columns: 1fr;
             }
-            .mobile-chart {
-                height: 400px !important;
-            }
-            .mobile-text {
-                font-size: 0.9rem;
-            }
-            .mobile-button {
-                padding: 0.75rem 1rem;
-                font-size: 1rem;
-            }
-        }
-        
-        /* タブレット対応 */
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .tablet-stack {
-                flex-direction: column;
+            .col-span-4, .col-span-8 {
+                grid-column: span 1;
             }
         }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <div class="container mx-auto px-2 sm:px-4 py-4 sm:py-6">
+    <div class="container mx-auto px-4 py-6">
         <!-- Header -->
-        <div class="gradient-bg text-white rounded-lg p-4 sm:p-6 mb-4 sm:mb-6 card-shadow">
-            <h1 class="text-xl sm:text-3xl font-bold mb-2">
-                <i class="fas fa-code mr-2 sm:mr-3"></i>IT・SaaS業界 戦略バランスボード
-            </h1>
-            <p class="text-sm sm:text-lg opacity-90">プロダクト・マーケット・フィット × ユニットエコノミクス分析</p>
+        <div class="gradient-bg text-white rounded-lg p-6 mb-6 card-shadow">
+            <h1 class="text-3xl font-bold mb-2"><i class="fas fa-code mr-3"></i>IT・SaaS業界 戦略バランスボード</h1>
+            <p class="text-lg opacity-90">プロダクト・マーケット・フィット×ユニットエコノミクス分析</p>
         </div>
 
         <!-- Main Content -->
-        <div class="flex flex-col lg:flex-row gap-4 sm:gap-6">
+        <div class="grid grid-cols-12 gap-6">
             <!-- Control Panel -->
-            <div class="w-full lg:w-1/3 space-y-4">
-                <div class="bg-white rounded-lg p-4 sm:p-6 card-shadow">
-                    <h2 class="text-lg sm:text-xl font-bold mb-4 text-gray-800">
-                        <i class="fas fa-sliders-h mr-2"></i>KPI調整パネル
-                    </h2>
+            <div class="col-span-12 md:col-span-4 space-y-4">
+                <div class="bg-white rounded-lg p-6 card-shadow">
+                    <h2 class="text-xl font-bold mb-4 text-gray-800"><i class="fas fa-sliders-h mr-2"></i>要素調整パネル</h2>
                     
                     <div class="space-y-6">
                         <div class="slider-container">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                プロダクト品質 <span class="text-xs">(UI/UX・機能性)</span>
-                            </label>
-                            <input type="range" min="1" max="100" value="75" class="slider" id="product">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">プロダクト品質</label>
+                            <input type="range" min="1" max="100" value="70" class="slider" id="product">
                             <div class="flex justify-between text-xs text-gray-500 mt-1">
-                                <span>MVP</span><span id="productValue">75</span><span>完璧</span>
+                                <span>MVP</span><span id="productValue">70</span><span>完成</span>
                             </div>
                         </div>
 
                         <div class="slider-container">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                開発効率 <span class="text-xs">(速度・生産性)</span>
-                            </label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">開発効率</label>
                             <input type="range" min="1" max="100" value="65" class="slider" id="development">
                             <div class="flex justify-between text-xs text-gray-500 mt-1">
                                 <span>低速</span><span id="developmentValue">65</span><span>高速</span>
@@ -116,9 +82,7 @@
                         </div>
 
                         <div class="slider-container">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                CAC効率 <span class="text-xs">(顧客獲得コスト)</span>
-                            </label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">CAC効率</label>
                             <input type="range" min="1" max="100" value="60" class="slider" id="cac">
                             <div class="flex justify-between text-xs text-gray-500 mt-1">
                                 <span>高コスト</span><span id="cacValue">60</span><span>効率的</span>
@@ -126,9 +90,7 @@
                         </div>
 
                         <div class="slider-container">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                LTV最大化 <span class="text-xs">(顧客生涯価値)</span>
-                            </label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">LTV最大化</label>
                             <input type="range" min="1" max="100" value="70" class="slider" id="ltv">
                             <div class="flex justify-between text-xs text-gray-500 mt-1">
                                 <span>低LTV</span><span id="ltvValue">70</span><span>高LTV</span>
@@ -136,9 +98,7 @@
                         </div>
 
                         <div class="slider-container">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">
-                                スケーラビリティ <span class="text-xs">(拡張性)</span>
-                            </label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">スケーラビリティ</label>
                             <input type="range" min="1" max="100" value="55" class="slider" id="scalability">
                             <div class="flex justify-between text-xs text-gray-500 mt-1">
                                 <span>制限的</span><span id="scalabilityValue">55</span><span>無限</span>
@@ -148,73 +108,60 @@
                 </div>
 
                 <!-- Success Indicator -->
-                <div class="bg-white rounded-lg p-4 sm:p-6 card-shadow">
-                    <h3 class="text-base sm:text-lg font-bold mb-4 text-gray-800">
-                        <i class="fas fa-rocket mr-2"></i>PMF達成確率
-                    </h3>
+                <div class="bg-white rounded-lg p-6 card-shadow">
+                    <h3 class="text-lg font-bold mb-4 text-gray-800"><i class="fas fa-rocket mr-2"></i>PMF達成確率</h3>
                     <div class="flex items-center justify-center mb-4">
-                        <div class="w-20 h-20 sm:w-24 sm:h-24 success-meter flex items-center justify-center relative">
-                            <span class="text-xl sm:text-2xl font-bold text-white z-10" id="successRate">82%</span>
+                        <div class="w-24 h-24 success-meter flex items-center justify-center relative">
+                            <span class="text-2xl font-bold text-white z-10" id="successRate">68%</span>
                         </div>
                     </div>
                     <div class="text-center">
-                        <span class="inline-block px-3 py-1 rounded-full text-sm font-medium" id="successLabel">優秀</span>
+                        <span class="inline-block px-3 py-1 rounded-full text-sm font-medium" id="successLabel">良好</span>
                     </div>
-                    <div class="mt-4 text-xs sm:text-sm text-gray-600">
-                        <div class="flex justify-between">
-                            <span>LTV/CAC比率:</span>
-                            <span id="ltvCacRatio" class="font-semibold">3.2x</span>
-                        </div>
-                        <div class="flex justify-between mt-1">
-                            <span>予想MRR成長:</span>
-                            <span id="mrrGrowth" class="font-semibold">+25%</span>
-                        </div>
+                    <div class="mt-3 text-xs text-gray-600">
+                        <div>LTV/CAC比率: <span id="ltvCacRatio">3.4x</span></div>
+                        <div>予想MRR成長: <span id="mrrGrowth">+12%</span></div>
                     </div>
                 </div>
 
                 <!-- Scenario Management -->
-                <div class="bg-white rounded-lg p-4 sm:p-6 card-shadow">
-                    <h3 class="text-base sm:text-lg font-bold mb-4 text-gray-800">
-                        <i class="fas fa-save mr-2"></i>シナリオ管理
-                    </h3>
+                <div class="bg-white rounded-lg p-6 card-shadow">
+                    <h3 class="text-lg font-bold mb-4 text-gray-800"><i class="fas fa-save mr-2"></i>シナリオ管理</h3>
                     <div class="space-y-2">
-                        <button class="w-full bg-blue-500 text-white px-4 py-2 sm:py-3 rounded hover:bg-blue-600 transition mobile-button" onclick="saveScenario()">
-                            <i class="fas fa-plus mr-2"></i>現在を保存
+                        <button class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" onclick="saveScenario()">
+                            <i class="fas fa-plus mr-2"></i>現在のシナリオを保存
                         </button>
-                        <select class="w-full border rounded px-3 py-2 sm:py-3 mobile-button" id="scenarioSelect" onchange="loadScenario()">
-                            <option value="">保存済みシナリオ</option>
+                        <select class="w-full border rounded px-3 py-2" id="scenarioSelect" onchange="loadScenario()">
+                            <option value="">保存済みシナリオを選択</option>
                         </select>
+                        <button class="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition" onclick="clearScenarios()">
+                            <i class="fas fa-trash mr-2"></i>全シナリオクリア
+                        </button>
                     </div>
                 </div>
             </div>
 
             <!-- Visualization Panel -->
-            <div class="w-full lg:w-2/3 space-y-4">
+            <div class="col-span-12 md:col-span-8 space-y-4">
                 <!-- Balance Board -->
-                <div class="bg-white rounded-lg p-4 sm:p-6 card-shadow">
-                    <h2 class="text-lg sm:text-xl font-bold mb-4 text-gray-800">
-                        <i class="fas fa-chart-radar mr-2"></i>SaaS戦略マップ
-                    </h2>
-                    <div class="relative mobile-chart" style="height: 350px;">
+                <div class="bg-white rounded-lg p-6 card-shadow">
+                    <h2 class="text-xl font-bold mb-4 text-gray-800"><i class="fas fa-chart-radar mr-2"></i>SaaS戦略マップ</h2>
+                    <div class="relative" style="height: 400px;">
                         <canvas id="balanceChart"></canvas>
                     </div>
                 </div>
 
-                <!-- Unit Economics -->
-                <div class="bg-white rounded-lg p-4 sm:p-6 card-shadow">
-                    <h2 class="text-lg sm:text-xl font-bold mb-4 text-gray-800">
-                        <i class="fas fa-chart-bar mr-2"></i>ユニットエコノミクス分析
-                    </h2>
-                    <div class="relative mobile-chart" style="height: 300px;">
-                        <canvas id="economicsChart"></canvas>
+                <!-- Correlation Matrix -->
+                <div class="bg-white rounded-lg p-6 card-shadow">
+                    <h2 class="text-xl font-bold mb-4 text-gray-800"><i class="fas fa-chart-bar mr-2"></i>ユニットエコノミクス分析</h2>
+                    <div class="relative" style="height: 300px;">
+                        <canvas id="correlationChart"></canvas>
                     </div>
                 </div>
 
                 <!-- Strategic Recommendations -->
-                <div class="bg-white rounded-lg p-4 sm:p-6 card-shadow">
-                    <h2 class="text-lg sm:text-xl font-bold mb-4 text-gray-800">
-                        <i class="fas fa-lightbulb mr-2"></i>SaaS戦略提案
-                    </h2>
+                <div class="bg-white rounded-lg p-6 card-shadow">
+                    <h2 class="text-xl font-bold mb-4 text-gray-800"><i class="fas fa-lightbulb mr-2"></i>SaaS戦略提案</h2>
                     <div id="recommendations" class="space-y-3">
                         <!-- Dynamic recommendations will be inserted here -->
                     </div>
@@ -223,16 +170,16 @@
         </div>
 
         <!-- Footer -->
-        <footer class="mt-8 pt-6 border-t border-gray-200 text-center text-sm text-gray-600">
-            <p>&copy; 2025 DEARS CONSULTING. All Rights Reserved.</p>
+        <div class="text-center mt-8 text-gray-500 text-sm">
+            <p>© 2025 DEARS CONSULTING. All Rights Reserved.</p>
             <p class="mt-1">IT・SaaS業界特化型戦略分析ツール</p>
-        </footer>
+        </div>
     </div>
 
     <script>
         // Global variables
-        let balanceChart, economicsChart;
-        let scenarios = JSON.parse(localStorage.getItem('saasStrategicScenarios')) || [];
+        let balanceChart, correlationChart;
+        let scenarios = JSON.parse(localStorage.getItem('saasScenarios')) || [];
 
         // Initialize charts
         function initCharts() {
@@ -243,16 +190,14 @@
                 data: {
                     labels: ['プロダクト品質', '開発効率', 'CAC効率', 'LTV最大化', 'スケーラビリティ', '収益性'],
                     datasets: [{
-                        label: 'SaaS戦略バランス',
-                        data: [75, 65, 60, 70, 55, 0],
-                        backgroundColor: 'rgba(59, 130, 246, 0.2)',
-                        borderColor: 'rgba(59, 130, 246, 1)',
-                        pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+                        label: '現在の戦略バランス',
+                        data: [70, 65, 60, 70, 55, 0],
+                        backgroundColor: 'rgba(79, 70, 229, 0.2)',
+                        borderColor: 'rgba(79, 70, 229, 1)',
+                        pointBackgroundColor: 'rgba(79, 70, 229, 1)',
                         pointBorderColor: '#fff',
                         pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgba(59, 130, 246, 1)',
-                        pointRadius: 6,
-                        pointHoverRadius: 8
+                        pointHoverBorderColor: 'rgba(79, 70, 229, 1)'
                     }]
                 },
                 options: {
@@ -262,31 +207,24 @@
                         r: {
                             angleLines: { display: true },
                             suggestedMin: 0,
-                            suggestedMax: 100,
-                            pointLabels: {
-                                font: {
-                                    size: window.innerWidth < 768 ? 10 : 12
-                                }
-                            }
+                            suggestedMax: 100
                         }
                     },
                     plugins: {
-                        legend: { 
-                            display: false 
-                        }
+                        legend: { display: false }
                     }
                 }
             });
 
-            // Unit Economics Chart (Bar)
-            const economicsCtx = document.getElementById('economicsChart').getContext('2d');
-            economicsChart = new Chart(economicsCtx, {
+            // Correlation Chart (Bar)
+            const correlationCtx = document.getElementById('correlationChart').getContext('2d');
+            correlationChart = new Chart(correlationCtx, {
                 type: 'bar',
                 data: {
                     labels: ['CAC', 'LTV', 'MRR成長', 'チャーン率', 'ARR', 'バーンレート'],
                     datasets: [{
-                        label: 'SaaS指標',
-                        data: [40, 120, 25, 5, 800, 60],
+                        label: '指標値',
+                        data: [80, 120, 15, -5, 600, 350],
                         backgroundColor: [
                             'rgba(239, 68, 68, 0.7)',
                             'rgba(16, 185, 129, 0.7)',
@@ -303,17 +241,12 @@
                             'rgba(139, 92, 246, 1)',
                             'rgba(236, 72, 153, 1)'
                         ],
-                        borderWidth: 2
+                        borderWidth: 1
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    },
                     plugins: {
                         legend: { display: false }
                     }
@@ -324,31 +257,18 @@
         // Calculate profitability based on SaaS metrics
         function calculateProfitability(product, development, cac, ltv, scalability) {
             const productMarketFit = (product * ltv) / 10000;
-            const developmentEfficiency = development * 0.8;
+            const developmentEfficiency = development * 0.7;
             const customerAcquisition = (101 - cac) * 0.6;
-            const scaleAdvantage = Math.log(scalability + 1) / Math.log(101);
+            const scaleAdvantage = scalability * 0.5;
             
             const profitability = Math.min(100, Math.max(0, 
-                (productMarketFit * 35 + 
+                (productMarketFit * 30 + 
                  developmentEfficiency * 25 + 
-                 customerAcquisition * 20 + 
-                 scaleAdvantage * 20) * 1.1
+                 customerAcquisition * 25 + 
+                 scaleAdvantage * 20)
             ));
             
             return Math.round(profitability);
-        }
-
-        // Calculate LTV/CAC ratio
-        function calculateLTVCACRatio(ltv, cac) {
-            const ltvValue = ltv * 10; // Convert to dollar amount
-            const cacValue = Math.max(1, (101 - cac) * 5); // Inverse for CAC
-            return (ltvValue / cacValue).toFixed(1);
-        }
-
-        // Calculate MRR growth
-        function calculateMRRGrowth(product, development, scalability) {
-            const growth = ((product + development + scalability) / 3 - 50) * 0.8;
-            return Math.max(-20, Math.min(50, Math.round(growth)));
         }
 
         // Update all visualizations
@@ -360,8 +280,6 @@
             const scalability = parseInt(document.getElementById('scalability').value);
             
             const profitability = calculateProfitability(product, development, cac, ltv, scalability);
-            const ltvCacRatio = calculateLTVCACRatio(ltv, cac);
-            const mrrGrowth = calculateMRRGrowth(product, development, scalability);
             
             // Update value displays
             document.getElementById('productValue').textContent = product;
@@ -374,94 +292,88 @@
             balanceChart.data.datasets[0].data = [product, development, cac, ltv, scalability, profitability];
             balanceChart.update();
             
-            // Update economics chart
-            const cacMetric = (101 - cac) * 2; // Higher is better for display
-            const ltvMetric = ltv * 1.5;
-            const mrrMetric = Math.max(0, mrrGrowth + 20);
-            const churnRate = Math.max(1, 11 - (product + ltv) / 20);
-            const arr = (ltvMetric * scalability) / 10;
-            const burnRate = Math.max(10, 100 - profitability);
+            // Update correlation data - SaaS specific metrics
+            const cacValue = Math.round(120 - (cac * 0.8));
+            const ltvValue = Math.round(ltv * 1.5);
+            const mrrGrowth = Math.round((product + development + scalability) / 10);
+            const churnRate = Math.round((101 - ltv) * 0.1);
+            const arrValue = Math.round(ltvValue * 8);
+            const burnRate = Math.round(400 - (development * 2));
             
-            economicsChart.data.datasets[0].data = [cacMetric, ltvMetric, mrrMetric, churnRate, arr, burnRate];
-            economicsChart.update();
+            correlationChart.data.datasets[0].data = [cacValue, ltvValue, mrrGrowth, -churnRate, arrValue, burnRate];
+            correlationChart.update();
             
-            // Update success rate
-            const pmfRate = Math.round((product + ltv + profitability) / 3);
+            // Update success rate (PMF probability)
+            const pmfRate = Math.round((product + ltv + scalability) / 3);
             document.getElementById('successRate').textContent = pmfRate + '%';
+            
+            // Update LTV/CAC ratio
+            const ltvCacRatio = (ltvValue / cacValue).toFixed(1);
             document.getElementById('ltvCacRatio').textContent = ltvCacRatio + 'x';
-            document.getElementById('mrrGrowth').textContent = (mrrGrowth >= 0 ? '+' : '') + mrrGrowth + '%';
+            document.getElementById('mrrGrowth').textContent = '+' + mrrGrowth + '%';
             
             const successLabel = document.getElementById('successLabel');
             if (pmfRate >= 80) {
                 successLabel.textContent = 'PMF達成';
                 successLabel.className = 'inline-block px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800';
             } else if (pmfRate >= 60) {
-                successLabel.textContent = '成長段階';
+                successLabel.textContent = '良好';
                 successLabel.className = 'inline-block px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800';
             } else {
-                successLabel.textContent = 'MVP段階';
+                successLabel.textContent = '要改善';
                 successLabel.className = 'inline-block px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800';
             }
             
             // Update recommendations
-            updateRecommendations(product, development, cac, ltv, scalability, profitability, ltvCacRatio, mrrGrowth);
+            updateRecommendations(product, development, cac, ltv, scalability, profitability);
         }
 
-        // Generate SaaS-specific recommendations
-        function updateRecommendations(product, development, cac, ltv, scalability, profitability, ltvCacRatio, mrrGrowth) {
+        // Generate SaaS specific recommendations
+        function updateRecommendations(product, development, cac, ltv, scalability, profitability) {
             const recommendations = [];
             
-            if (parseFloat(ltvCacRatio) < 3) {
+            if (ltvValue / cacValue < 3) {
                 recommendations.push({
                     icon: 'fas fa-exclamation-triangle',
                     type: 'warning',
                     title: 'LTV/CAC比率改善が急務',
-                    text: 'LTV/CAC比率が3倍未満です。顧客維持率向上か獲得コスト削減が必要です。'
+                    text: 'ユニットエコノミクスが悪化しています。CAC削減またはLTV向上が必要です。'
                 });
             }
             
             if (product > 80 && scalability < 50) {
                 recommendations.push({
-                    icon: 'fas fa-server',
+                    icon: 'fas fa-expand-arrows-alt',
                     type: 'info',
-                    title: '高品質プロダクトのスケール準備',
-                    text: 'プロダクト品質は高いですが、スケーラビリティが不足です。インフラ強化を検討してください。'
+                    title: 'スケーラビリティ強化を推奨',
+                    text: '高品質なプロダクトを活かすため、スケール体制の構築を優先してください。'
                 });
             }
             
-            if (mrrGrowth < 10) {
-                recommendations.push({
-                    icon: 'fas fa-chart-line',
-                    type: 'warning',
-                    title: 'MRR成長率の向上',
-                    text: 'MRR成長が鈍化しています。新機能開発かアップセル戦略の強化が必要です。'
-                });
-            }
-            
-            if (development > 70 && product < 60) {
+            if (development < 50) {
                 recommendations.push({
                     icon: 'fas fa-code',
                     type: 'warning',
-                    title: '開発効率とプロダクト品質のバランス',
-                    text: '開発は高速ですがプロダクト品質が不足です。技術負債の解消を優先してください。'
+                    title: '開発効率の改善が必要',
+                    text: '市場投入速度が競合に劣っています。開発プロセスの最適化を検討してください。'
                 });
             }
             
-            if (ltv > 80 && cac > 70) {
-                recommendations.push({
-                    icon: 'fas fa-users',
-                    type: 'success',
-                    title: '高LTV×効率的CAC達成',
-                    text: '理想的なユニットエコノミクスです。この優位性を活かした積極的な成長戦略を推奨します。'
-                });
-            }
-            
-            if (profitability < 40) {
+            if (ltv > 70 && cac > 70) {
                 recommendations.push({
                     icon: 'fas fa-dollar-sign',
-                    type: 'warning',
-                    title: 'バーンレート最適化',
-                    text: '収益性が低すぎます。コスト構造の見直しかプライシング戦略の再検討が必要です。'
+                    type: 'success',
+                    title: '高価値顧客獲得戦略',
+                    text: '高LTV顧客を維持しながら、CAC効率化でさらなる成長を目指せます。'
+                });
+            }
+            
+            if (scalability > 80 && profitability < 60) {
+                recommendations.push({
+                    icon: 'fas fa-chart-line',
+                    type: 'info',
+                    title: 'マネタイゼーション最適化',
+                    text: 'スケール基盤は整備済み。収益化モデルの見直しで利益率向上が可能です。'
                 });
             }
             
@@ -471,9 +383,9 @@
                     <i class="${rec.icon} ${rec.type === 'success' ? 'text-green-600' : 
                         rec.type === 'warning' ? 'text-yellow-600' : 'text-blue-600'} mt-1 mr-3"></i>
                     <div>
-                        <h4 class="font-medium mobile-text ${rec.type === 'success' ? 'text-green-800' : 
+                        <h4 class="font-medium ${rec.type === 'success' ? 'text-green-800' : 
                             rec.type === 'warning' ? 'text-yellow-800' : 'text-blue-800'}">${rec.title}</h4>
-                        <p class="text-sm mobile-text ${rec.type === 'success' ? 'text-green-700' : 
+                        <p class="text-sm ${rec.type === 'success' ? 'text-green-700' : 
                             rec.type === 'warning' ? 'text-yellow-700' : 'text-blue-700'} mt-1">${rec.text}</p>
                     </div>
                 </div>
@@ -500,7 +412,7 @@
             };
             
             scenarios.push(scenario);
-            localStorage.setItem('saasStrategicScenarios', JSON.stringify(scenarios));
+            localStorage.setItem('saasScenarios', JSON.stringify(scenarios));
             updateScenarioSelect();
             alert('シナリオが保存されました！');
         }
@@ -520,9 +432,18 @@
             }
         }
 
+        function clearScenarios() {
+            if (confirm('全てのシナリオを削除しますか？')) {
+                scenarios = [];
+                localStorage.removeItem('saasScenarios');
+                updateScenarioSelect();
+                alert('全シナリオが削除されました。');
+            }
+        }
+
         function updateScenarioSelect() {
             const select = document.getElementById('scenarioSelect');
-            select.innerHTML = '<option value="">保存済みシナリオ</option>';
+            select.innerHTML = '<option value="">保存済みシナリオを選択</option>';
             scenarios.forEach((scenario, index) => {
                 const option = document.createElement('option');
                 option.value = index;
@@ -535,7 +456,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             initCharts();
             updateScenarioSelect();
-            updateVisualizations();
+            updateVisualizationsInitial();
             
             // Add event listeners to all sliders
             ['product', 'development', 'cac', 'ltv', 'scalability'].forEach(id => {
@@ -543,21 +464,53 @@
             });
         });
 
-        // Handle window resize for mobile optimization
-        window.addEventListener('resize', function() {
-            if (balanceChart && economicsChart) {
-                balanceChart.resize();
-                economicsChart.resize();
+        // Initial update with proper values
+        function updateVisualizationsInitial() {
+            const product = 70;
+            const development = 65;
+            const cac = 60;
+            const ltv = 70;
+            const scalability = 55;
+            
+            const profitability = calculateProfitability(product, development, cac, ltv, scalability);
+            
+            // Update value displays
+            document.getElementById('productValue').textContent = product;
+            document.getElementById('developmentValue').textContent = development;
+            document.getElementById('cacValue').textContent = cac;
+            document.getElementById('ltvValue').textContent = ltv;
+            document.getElementById('scalabilityValue').textContent = scalability;
+            
+            // Update balance chart
+            balanceChart.data.datasets[0].data = [product, development, cac, ltv, scalability, profitability];
+            balanceChart.update();
+            
+            // Update success rate
+            const pmfRate = Math.round((product + ltv + scalability) / 3);
+            document.getElementById('successRate').textContent = pmfRate + '%';
+            
+            const successLabel = document.getElementById('successLabel');
+            if (pmfRate >= 80) {
+                successLabel.textContent = 'PMF達成';
+                successLabel.className = 'inline-block px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800';
+            } else if (pmfRate >= 60) {
+                successLabel.textContent = '良好';
+                successLabel.className = 'inline-block px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800';
+            } else {
+                successLabel.textContent = '要改善';
+                successLabel.className = 'inline-block px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800';
             }
-        });
+            
+            updateRecommendations(product, development, cac, ltv, scalability, profitability);
+        }
     </script>
 </body>
 </html>
     <script id="html_badge_script1">
         window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
-            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDlseb6mBzmPXPzp9JwwNE6LazloG9jbJGo4n%2FCBM2cQe2kzvERXejjvdg%2FqOg7JRIxeaLzD8CHtx4YIJ4fwrpuDFTFZjap2NzW%2FiWxKXvLrgoiq6ukXADk5Y2k7VLFQzJmPFHb6zQbg7s6eUvuIhbdSOx48L9MmKRsp4jUnIO%2FbMhzoc65zsNbw7MomOZ2MkB0IO7YJhYDT0eDydiEkoh%2BX0FhiD7%2Ff1etPvMewQn5KEpxWuVXXNWU4YqYN7AUwv9mB0RwDI9k9zXwakMCnd%2FGookuNqzTLOul1XwDnoigLbS67oreLeDdvvm3c3nLpCGRWaG6m%2B85ALsCXxbnPpM8zMkicJS5cohQejPV%2FF6zqx3RlSsa3DQZwL0M4Fhp%2FNTm8AWZIXhaeT3UPuyPv8MbVW1DQIlS%2BVqPeXjyClFqROVomZVra90xzO7o53Cbc4qHP%2Boyx0qRCz0X9KiEiqhExW%2BBGAnGyyMpRljsmP1GevnDkXyb4jRmFeksgqyY37%2Fr1%2FlVPRxzeG776EMSMbRp8%3D";
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDp2pgKG3Mur%2BWlC7PEoq%2FAOn7H8ywSnPrRdbk03TZkhyDVCCgC9vLoe9P9npek%2F7eoX0Tgj5FM3wffxWn%2F6s5JTpS%2BAunUy4SDJ2EYQVylOIWh8%2Fem8m5Q1OXXkaw09gWloYS%2BJhI61iSzXF1TZIhXXWTf9prLNV9YoYRqV2o%2BAGkNgtCLS2uGpz0AxKYtfPiX98jgjxW%2FZ1UJsxtuKmdhKmP1IxVUZbwrn2RwSJlFbNXLod8c%2Bmf9mSDbDCACKsKsZcNz0Boa3RwkljEM%2F70POArEdaqhCIc%2BYyNGtMlJJyXgz3Lvl3%2FMYeoVRE%2FHnAmU%2BvUPuKfgXK4CYW%2BMiXcXf%2FauW8GE8DTTOZxycs1m9Xl%2BUj%2FMVQWK3zkDsyaZdj3cfBVWUDU2F%2F4%2F7UarrvXrRqEOP5buVfiQ%2F3ECfDMHkUiLbQAdfVNczjOYaW2rvXIyQz6YaPMLGDPF%2BqAqCGSlzMoe6HV4tu489kZLlylRlaSiS4CW2MeaUA8CfBpSSV7LR%2FfQ3sTT1ALf7uwstGezo%3D";
         window.__genspark_locale = "ja-JP";
-        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDlseb6mBzmPXPzp9JwwNE6LazloG9jbJGo4n/CBM2cQe2kzvERXejjvdg/qOg7JRIxeaLzD8CHtx4YIJ4fwrpuDFTFZjap2NzW/iWxKXvLrgoiq6ukXADk5Y2k7VLFQzJmPFHb6zQbg7s6eUvuIhbdSOx48L9MmKRsp4jUnIO/bMhzoc65zsNbw7MomOZ2MkB0IO7YJhYDT0eDydiEkoh+X0FhiD7/f1etPvMewQn5KEpxWuVXXNWU4YqYN7AUwv9mB0RwDI9k9zXwakMCnd/GookuNqzTLOul1XwDnoigLbS67oreLeDdvvm3c3nLpCGRWaG6m+85ALsCXxbnPpM8zMkicJS5cohQejPV/F6zqx3RlSsa3DQZwL0M4Fhp/NTm8AWZIXhaeT3UPuyPv8MbVW1DQIlS+VqPeXjyClFqROVomZVra90xzO7o53Cbc4qHP+oyx0qRCz0X9KiEiqhExW+BGAnGyyMpRljsmP1GevnDkXyb4jRmFeksgqyY37/r1/lVPRxzeG776EMSMbRp8=";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDp2pgKG3Mur+WlC7PEoq/AOn7H8ywSnPrRdbk03TZkhyDVCCgC9vLoe9P9npek/7eoX0Tgj5FM3wffxWn/6s5JTpS+AunUy4SDJ2EYQVylOIWh8/em8m5Q1OXXkaw09gWloYS+JhI61iSzXF1TZIhXXWTf9prLNV9YoYRqV2o+AGkNgtCLS2uGpz0AxKYtfPiX98jgjxW/Z1UJsxtuKmdhKmP1IxVUZbwrn2RwSJlFbNXLod8c+mf9mSDbDCACKsKsZcNz0Boa3RwkljEM/70POArEdaqhCIc+YyNGtMlJJyXgz3Lvl3/MYeoVRE/HnAmU+vUPuKfgXK4CYW+MiXcXf/auW8GE8DTTOZxycs1m9Xl+Uj/MVQWK3zkDsyaZdj3cfBVWUDU2F/4/7UarrvXrRqEOP5buVfiQ/3ECfDMHkUiLbQAdfVNczjOYaW2rvXIyQz6YaPMLGDPF+qAqCGSlzMoe6HV4tu489kZLlylRlaSiS4CW2MeaUA8CfBpSSV7LR/fQ3sTT1ALf7uwstGezo=";
     </script>
     
     <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
