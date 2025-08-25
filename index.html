@@ -3,528 +3,761 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT・SaaS業界 戦略バランスボード | DEARS CONSULTING</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <title>戦略バランスボード - IT・SaaS業界版 | DEARS CONSULTING</title>
+    <meta name="description" content="IT・SaaS業界の収益達成可能性を俯瞰視点で可視化する戦略思考支援ツール。AI・DX、スケーラビリティ、プロダクト、テクノロジー基盤の6要素で戦略バランスを分析。">
+    <meta name="keywords" content="戦略バランスボード,IT業界,SaaS,AI,DX,スケーラビリティ,プロダクト,DEARS CONSULTING">
+    <meta name="author" content="DEARS CONSULTING">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="戦略バランスボード - IT・SaaS業界版">
+    <meta property="og:description" content="IT・SaaS業界の収益達成可能性を俯瞰視点で可視化する戦略思考支援ツール">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="DEARS CONSULTING">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="戦略バランスボード - IT・SaaS業界版">
+    <meta name="twitter:description" content="IT・SaaS業界の収益達成可能性を俯瞰視点で可視化する戦略思考支援ツール">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
     <style>
-        .gradient-bg {
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
         }
         .card-shadow {
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .slider-track {
+            background: linear-gradient(to right, #667eea, #764ba2, #f093fb, #f5576c);
+        }
+        .strategic-element {
+            transition: all 0.3s ease;
+        }
+        .strategic-element:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+        .success-indicator {
+            background: radial-gradient(circle, #20bf6b, #26d0ce);
+        }
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 20px 0;
+        }
+        .insight-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            margin: 15px 0;
+        }
+        .strategic-score {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .element-icon {
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.25rem;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        .score-display {
+            background: rgba(255,255,255,0.9);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-top: 16px;
         }
         .slider-container {
-            position: relative;
+            margin-bottom: 1rem;
         }
-        .slider {
-            -webkit-appearance: none;
+        .slider-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+        .slider-range {
             width: 100%;
-            height: 6px;
-            border-radius: 3px;
-            background: #ddd;
+            height: 8px;
+            border-radius: 4px;
             outline: none;
+            -webkit-appearance: none;
+            appearance: none;
         }
-        .slider::-webkit-slider-thumb {
+        .slider-range::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: #4f46e5;
+            background: #3b82f6;
             cursor: pointer;
+            border: 2px solid white;
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
-        .success-meter {
-            background: conic-gradient(from 0deg, #ef4444 0deg, #f59e0b 120deg, #10b981 240deg, #10b981 360deg);
+        .slider-range::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        .slider-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-top: 0.25rem;
+        }
+        .slider-value {
+            font-weight: 600;
+            color: #1f2937;
         }
         @media (max-width: 768px) {
-            .desktop-layout {
-                flex-direction: column !important;
+            .strategic-score {
+                font-size: 2rem;
             }
-            .chart-container {
-                height: 500px !important;
-            }
-            .correlation-chart {
-                height: 400px !important;
+            .element-icon {
+                width: 2.5rem;
+                height: 2.5rem;
+                font-size: 1rem;
             }
         }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
-    <div class="container mx-auto px-4 py-6">
+<body class="p-4">
+    <div class="max-w-7xl mx-auto">
         <!-- Header -->
-        <div class="gradient-bg text-white rounded-lg p-6 mb-6 card-shadow">
-            <h1 class="text-3xl font-bold mb-2"><i class="fas fa-chess-board mr-3"></i>IT・SaaS業界 戦略バランスボード</h1>
-            <p class="text-lg opacity-90">プロダクト・マーケット・フィット×ユニットエコノミクス分析</p>
+        <div class="text-center mb-8">
+            <div class="mb-4">
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-2">
+                    <i class="fas fa-laptop-code mr-3"></i>戦略バランスボード
+                </h1>
+                <h2 class="text-xl md:text-2xl text-white opacity-90">IT・SaaS業界版</h2>
+            </div>
+            <p class="text-base md:text-lg text-white opacity-80 max-w-2xl mx-auto">
+                IT・SaaS業界の収益達成可能性を俯瞰視点で可視化する戦略思考支援ツール
+            </p>
+            <div class="mt-4 text-sm text-white opacity-60">
+                Powered by DEARS CONSULTING
+            </div>
         </div>
 
-        <!-- Main Content -->
-        <div class="desktop-layout flex flex-col lg:flex-row gap-6">
-            <!-- Control Panel -->
-            <div class="w-full lg:w-1/3 space-y-4">
-                <div class="bg-white rounded-lg p-6 card-shadow">
-                    <h2 class="text-xl font-bold mb-4 text-gray-800"><i class="fas fa-sliders-h mr-2"></i>要素調整パネル</h2>
+        <!-- Success Rate Display -->
+        <div class="bg-white rounded-3xl card-shadow p-6 md:p-8 mb-8">
+            <div class="text-center">
+                <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-4">収益達成可能性</h3>
+                <div class="chart-container">
+                    <canvas id="successChart"></canvas>
+                </div>
+                <div id="successRate" class="strategic-score text-green-600 mt-4">78%</div>
+                <p class="text-gray-600 text-sm md:text-base mt-2">現在の戦略バランスに基づく達成予測</p>
+            </div>
+        </div>
+
+        <!-- Strategic Elements Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
+            
+            <!-- 1. トレンド適合性 -->
+            <div class="strategic-element bg-white rounded-3xl card-shadow p-6">
+                <div class="flex items-center mb-6">
+                    <div class="element-icon bg-gradient-to-r from-blue-500 to-cyan-500">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-gray-800">トレンド適合性</h3>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="slider-container">
+                        <label class="slider-label">AI・機械学習活用</label>
+                        <input type="range" id="aiMlAdoption" min="0" max="100" value="80" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>未活用</span>
+                            <span id="aiMlAdoptionValue" class="slider-value">80%</span>
+                            <span>先進活用</span>
+                        </div>
+                    </div>
                     
-                    <div class="space-y-6">
-                        <div class="slider-container">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">プロダクト品質</label>
-                            <input type="range" min="1" max="100" value="70" class="slider" id="product-quality">
-                            <div class="flex justify-between text-xs text-gray-500 mt-1">
-                                <span>MVP</span><span id="productQualityValue">70</span><span>完璧</span>
-                            </div>
+                    <div class="slider-container">
+                        <label class="slider-label">クラウドネイティブ対応</label>
+                        <input type="range" id="cloudNative" min="0" max="100" value="85" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>オンプレミス</span>
+                            <span id="cloudNativeValue" class="slider-value">85%</span>
+                            <span>完全クラウド</span>
                         </div>
-
-                        <div class="slider-container">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">開発効率</label>
-                            <input type="range" min="1" max="100" value="65" class="slider" id="dev-efficiency">
-                            <div class="flex justify-between text-xs text-gray-500 mt-1">
-                                <span>低速</span><span id="devEfficiencyValue">65</span><span>高速</span>
-                            </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label class="slider-label">DX・デジタル変革支援</label>
+                        <input type="range" id="digitalTransformation" min="0" max="100" value="75" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>従来型</span>
+                            <span id="digitalTransformationValue" class="slider-value">75%</span>
+                            <span>変革リーダー</span>
                         </div>
-
-                        <div class="slider-container">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">CAC効率</label>
-                            <input type="range" min="1" max="100" value="60" class="slider" id="cac-efficiency">
-                            <div class="flex justify-between text-xs text-gray-500 mt-1">
-                                <span>高コスト</span><span id="cacEfficiencyValue">60</span><span>効率的</span>
-                            </div>
-                        </div>
-
-                        <div class="slider-container">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">LTV最大化</label>
-                            <input type="range" min="1" max="100" value="70" class="slider" id="ltv-max">
-                            <div class="flex justify-between text-xs text-gray-500 mt-1">
-                                <span>低LTV</span><span id="ltvMaxValue">70</span><span>高LTV</span>
-                            </div>
-                        </div>
-
-                        <div class="slider-container">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">スケーラビリティ</label>
-                            <input type="range" min="1" max="100" value="55" class="slider" id="scalability">
-                            <div class="flex justify-between text-xs text-gray-500 mt-1">
-                                <span>制限的</span><span id="scalabilityValue">55</span><span>無限</span>
-                            </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label class="slider-label">新技術・イノベーション</label>
+                        <input type="range" id="technologyInnovation" min="0" max="100" value="78" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>追従型</span>
+                            <span id="technologyInnovationValue" class="slider-value">78%</span>
+                            <span>先行開発</span>
                         </div>
                     </div>
                 </div>
-
-                <!-- PMF Success Indicator -->
-                <div class="bg-white rounded-lg p-6 card-shadow">
-                    <h3 class="text-lg font-bold mb-4 text-gray-800"><i class="fas fa-rocket mr-2"></i>PMF達成確率</h3>
-                    <div class="flex items-center justify-center mb-4">
-                        <div class="w-24 h-24 success-meter flex items-center justify-center relative">
-                            <span class="text-2xl font-bold text-white z-10" id="pmfRate">72%</span>
-                        </div>
-                    </div>
-                    <div class="text-center mb-4">
-                        <span class="inline-block px-3 py-1 rounded-full text-sm font-medium" id="pmfLabel">良好</span>
-                    </div>
-                    <div class="text-sm text-gray-600">
-                        <div class="flex justify-between">
-                            <span>LTV/CAC比率:</span>
-                            <span id="ltvCacRatio">3.4x</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span>予想MRR成長:</span>
-                            <span id="mrrGrowth">+12%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Scenario Management -->
-                <div class="bg-white rounded-lg p-6 card-shadow">
-                    <h3 class="text-lg font-bold mb-4 text-gray-800"><i class="fas fa-save mr-2"></i>シナリオ管理</h3>
-                    <div class="space-y-2">
-                        <button class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition" onclick="saveScenario()">
-                            <i class="fas fa-plus mr-2"></i>現在を保存
-                        </button>
-                        <select class="w-full border rounded px-3 py-2" id="scenarioSelect" onchange="loadScenario()">
-                            <option value="">保存済みシナリオを選択</option>
-                        </select>
-                        <button class="w-full bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition" onclick="clearScenarios()">
-                            <i class="fas fa-trash mr-2"></i>全シナリオクリア
-                        </button>
-                    </div>
+                
+                <div class="score-display">
+                    <div class="text-sm font-semibold text-blue-800">トレンド総合スコア</div>
+                    <div id="trendScore" class="text-2xl font-bold text-blue-600">79.5%</div>
                 </div>
             </div>
 
-            <!-- Visualization Panel -->
-            <div class="w-full lg:w-2/3 space-y-4">
-                <!-- Balance Board -->
-                <div class="bg-white rounded-lg p-6 card-shadow">
-                    <h2 class="text-xl font-bold mb-4 text-gray-800"><i class="fas fa-chart-radar mr-2"></i>SaaS戦略マップ</h2>
-                    <div class="chart-container" style="height: 400px;">
-                        <canvas id="balanceChart"></canvas>
+            <!-- 2. ブランド力 -->
+            <div class="strategic-element bg-white rounded-3xl card-shadow p-6">
+                <div class="flex items-center mb-6">
+                    <div class="element-icon bg-gradient-to-r from-purple-500 to-indigo-500">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-gray-800">ブランド力</h3>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="slider-container">
+                        <label class="slider-label">技術力・専門性認知</label>
+                        <input type="range" id="technicalReputation" min="0" max="100" value="82" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>低評価</span>
+                            <span id="technicalReputationValue" class="slider-value">82%</span>
+                            <span>業界トップ</span>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label class="slider-label">市場での差別化・独自性</label>
+                        <input type="range" id="marketDifferentiation" min="0" max="100" value="75" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>類似商品</span>
+                            <span id="marketDifferentiationValue" class="slider-value">75%</span>
+                            <span>唯一無二</span>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label class="slider-label">顧客・ユーザー満足度</label>
+                        <input type="range" id="userSatisfaction" min="0" max="100" value="80" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>不満多数</span>
+                            <span id="userSatisfactionValue" class="slider-value">80%</span>
+                            <span>極めて高い</span>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label class="slider-label">業界内ポジション・信頼度</label>
+                        <input type="range" id="industryTrust" min="0" max="100" value="78" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>無名</span>
+                            <span id="industryTrustValue" class="slider-value">78%</span>
+                            <span>業界リーダー</span>
+                        </div>
                     </div>
                 </div>
+                
+                <div class="score-display">
+                    <div class="text-sm font-semibold text-purple-800">ブランド総合スコア</div>
+                    <div id="brandScore" class="text-2xl font-bold text-purple-600">78.8%</div>
+                </div>
+            </div>
 
-                <!-- Correlation Matrix -->
-                <div class="bg-white rounded-lg p-6 card-shadow">
-                    <h2 class="text-xl font-bold mb-4 text-gray-800"><i class="fas fa-chart-bar mr-2"></i>ユニットエコノミクス分析</h2>
-                    <div class="correlation-chart" style="height: 300px;">
-                        <canvas id="correlationChart"></canvas>
+            <!-- 3. プロダクト・サービス力 -->
+            <div class="strategic-element bg-white rounded-3xl card-shadow p-6">
+                <div class="flex items-center mb-6">
+                    <div class="element-icon bg-gradient-to-r from-green-500 to-emerald-500">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-gray-800">プロダクト・サービス力</h3>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="slider-container">
+                        <label class="slider-label">機能・性能・品質</label>
+                        <input type="range" id="productQuality" min="0" max="100" value="85" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>基本的</span>
+                            <span id="productQualityValue" class="slider-value">85%</span>
+                            <span>最高品質</span>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label class="slider-label">ユーザビリティ・UX</label>
+                        <input type="range" id="userExperience" min="0" max="100" value="80" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>使いにくい</span>
+                            <span id="userExperienceValue" class="slider-value">80%</span>
+                            <span>直感的・優秀</span>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label class="slider-label">スケーラビリティ・拡張性</label>
+                        <input type="range" id="scalability" min="0" max="100" value="82" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>限定的</span>
+                            <span id="scalabilityValue" class="slider-value">82%</span>
+                            <span>無限拡張</span>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label class="slider-label">イノベーション・革新性</label>
+                        <input type="range" id="innovation" min="0" max="100" value="78" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>一般的</span>
+                            <span id="innovationValue" class="slider-value">78%</span>
+                            <span>革新的</span>
+                        </div>
                     </div>
                 </div>
+                
+                <div class="score-display">
+                    <div class="text-sm font-semibold text-green-800">プロダクト総合スコア</div>
+                    <div id="productScore" class="text-2xl font-bold text-green-600">81.3%</div>
+                </div>
+            </div>
 
-                <!-- Strategic Recommendations -->
-                <div class="bg-white rounded-lg p-6 card-shadow">
-                    <h2 class="text-xl font-bold mb-4 text-gray-800"><i class="fas fa-lightbulb mr-2"></i>SaaS戦略提案</h2>
-                    <div id="recommendations" class="space-y-3">
-                        <!-- Dynamic recommendations will be inserted here -->
+            <!-- 4. 経営環境 -->
+            <div class="strategic-element bg-white rounded-3xl card-shadow p-6">
+                <div class="flex items-center mb-6">
+                    <div class="element-icon bg-gradient-to-r from-yellow-500 to-orange-500">
+                        <i class="fas fa-network-wired"></i>
                     </div>
+                    <h3 class="text-lg md:text-xl font-bold text-gray-800">経営環境</h3>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="slider-container">
+                        <label class="slider-label">テクノロジー基盤・インフラ</label>
+                        <input type="range" id="techInfrastructure" min="0" max="100" value="85" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>レガシー</span>
+                            <span id="techInfrastructureValue" class="slider-value">85%</span>
+                            <span>最新基盤</span>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label class="slider-label">開発・運用体制</label>
+                        <input type="range" id="devOpsCapability" min="0" max="100" value="80" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>従来型</span>
+                            <span id="devOpsCapabilityValue" class="slider-value">80%</span>
+                            <span>アジャイル</span>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label class="slider-label">人材・エンジニア力</label>
+                        <input type="range" id="engineeringTalent" min="0" max="100" value="75" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>人材不足</span>
+                            <span id="engineeringTalentValue" class="slider-value">75%</span>
+                            <span>トップ人材</span>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label class="slider-label">セキュリティ・信頼性</label>
+                        <input type="range" id="securityReliability" min="0" max="100" value="88" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>脆弱</span>
+                            <span id="securityReliabilityValue" class="slider-value">88%</span>
+                            <span>堅牢</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="score-display">
+                    <div class="text-sm font-semibold text-yellow-800">経営環境総合スコア</div>
+                    <div id="environmentScore" class="text-2xl font-bold text-yellow-600">82.0%</div>
+                </div>
+            </div>
+
+            <!-- 5. 価格戦略 -->
+            <div class="strategic-element bg-white rounded-3xl card-shadow p-6">
+                <div class="flex items-center mb-6">
+                    <div class="element-icon bg-gradient-to-r from-red-500 to-pink-500">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-gray-800">価格戦略</h3>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="slider-container">
+                        <label class="slider-label">価格競争力・ポジショニング</label>
+                        <input type="range" id="pricePositioning" min="0" max="100" value="75" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>高すぎる</span>
+                            <span id="pricePositioningValue" class="slider-value">75%</span>
+                            <span>最適価格</span>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label class="slider-label">価値・ROI提供度</label>
+                        <input type="range" id="valueProposition" min="0" max="100" value="85" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>価値以下</span>
+                            <span id="valuePropositionValue" class="slider-value">85%</span>
+                            <span>高ROI</span>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label class="slider-label">料金モデル・柔軟性</label>
+                        <input type="range" id="pricingModel" min="0" max="100" value="80" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>固定</span>
+                            <span id="pricingModelValue" class="slider-value">80%</span>
+                            <span>柔軟対応</span>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label class="slider-label">収益性・LTV最大化</label>
+                        <input type="range" id="revenueOptimization" min="0" max="100" value="78" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>低収益</span>
+                            <span id="revenueOptimizationValue" class="slider-value">78%</span>
+                            <span>最大化</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="score-display">
+                    <div class="text-sm font-semibold text-red-800">価格戦略総合スコア</div>
+                    <div id="pricingScore" class="text-2xl font-bold text-red-600">79.5%</div>
+                </div>
+            </div>
+
+            <!-- 6. コスト効率 -->
+            <div class="strategic-element bg-white rounded-3xl card-shadow p-6">
+                <div class="flex items-center mb-6">
+                    <div class="element-icon bg-gradient-to-r from-indigo-500 to-purple-500">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-gray-800">コスト効率</h3>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="slider-container">
+                        <label class="slider-label">開発・人件費効率</label>
+                        <input type="range" id="developmentCostEfficiency" min="0" max="100" value="70" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>非効率</span>
+                            <span id="developmentCostEfficiencyValue" class="slider-value">70%</span>
+                            <span>高効率</span>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label class="slider-label">インフラ・運用コスト</label>
+                        <input type="range" id="infrastructureCost" min="0" max="100" value="78" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>高コスト</span>
+                            <span id="infrastructureCostValue" class="slider-value">78%</span>
+                            <span>最適化</span>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label class="slider-label">マーケティング・CAC効率</label>
+                        <input type="range" id="customerAcquisition" min="0" max="100" value="72" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>高CAC</span>
+                            <span id="customerAcquisitionValue" class="slider-value">72%</span>
+                            <span>効率的</span>
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label class="slider-label">自動化・効率化推進</label>
+                        <input type="range" id="automationEfficiency" min="0" max="100" value="75" 
+                               class="slider-range slider-track">
+                        <div class="slider-info">
+                            <span>手動中心</span>
+                            <span id="automationEfficiencyValue" class="slider-value">75%</span>
+                            <span>完全自動化</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="score-display">
+                    <div class="text-sm font-semibold text-indigo-800">コスト効率総合スコア</div>
+                    <div id="costScore" class="text-2xl font-bold text-indigo-600">73.8%</div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Footer -->
-    <div class="text-center py-6 text-gray-600">
-        © 2025 DEARS CONSULTING. All Rights Reserved.<br>
-        IT・SaaS業界特化戦略分析ツール
+        <!-- Strategic Insights -->
+        <div class="bg-white rounded-3xl card-shadow p-6 md:p-8 mb-8">
+            <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-6">戦略的インサイト</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="insight-box">
+                    <h4 class="text-lg font-semibold mb-3">
+                        <i class="fas fa-lightbulb mr-2"></i>強み分析
+                    </h4>
+                    <div id="strengthAnalysis">
+                        <p>経営環境（82.0%）が最大の強み。テクノロジー基盤とセキュリティで差別化を実現。</p>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <h4 class="text-lg font-semibold mb-3">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>改善機会
+                    </h4>
+                    <div id="improvementAnalysis">
+                        <p>コスト効率（73.8%）の向上が必要。開発効率とCAC最適化が収益性向上の鍵。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                <h4 class="text-lg font-semibold text-gray-800 mb-3">戦略的推奨アクション</h4>
+                <div id="recommendedActions" class="space-y-2 text-gray-700 text-sm md:text-base">
+                    <div>• AI・機械学習機能の拡充による競争優位性の確立</div>
+                    <div>• クラウドネイティブ化とスケーラビリティ向上による成長基盤構築</div>
+                    <div>• 開発効率化とDevOps体制強化によるコスト最適化</div>
+                    <div>• 顧客獲得コスト（CAC）削減とLTV最大化戦略の実行</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center text-white opacity-75 mt-8 pb-4">
+            <p class="text-lg font-semibold">© 2025 DEARS CONSULTING</p>
+            <p class="text-sm mt-2">戦略バランスボード - IT・SaaS業界版｜テクノロジービジネスの戦略可視化と収益達成可能性の最大化をサポート</p>
+            <div class="mt-3 text-xs opacity-60">
+                <a href="https://dearsconsulting.com" class="hover:opacity-80 transition-opacity">
+                    https://dearsconsulting.com
+                </a>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Global variables
-        let balanceChart, correlationChart;
-        let scenarios = JSON.parse(localStorage.getItem('saasScenarios')) || [];
-
-        // Initialize charts
-        function initCharts() {
-            // Balance Chart (Radar)
-            const balanceCtx = document.getElementById('balanceChart').getContext('2d');
-            balanceChart = new Chart(balanceCtx, {
-                type: 'radar',
+        // Chart.js setup
+        let successChart;
+        
+        function initializeChart() {
+            const ctx = document.getElementById('successChart').getContext('2d');
+            successChart = new Chart(ctx, {
+                type: 'doughnut',
                 data: {
-                    labels: ['プロダクト品質', '開発効率', 'CAC効率', 'LTV最大化', 'スケーラビリティ', '収益性'],
                     datasets: [{
-                        label: '現在の戦略バランス',
-                        data: [70, 65, 60, 70, 55, 0],
-                        backgroundColor: 'rgba(79, 70, 229, 0.2)',
-                        borderColor: 'rgba(79, 70, 229, 1)',
-                        pointBackgroundColor: 'rgba(79, 70, 229, 1)',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgba(79, 70, 229, 1)'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: {
-                            angleLines: { display: true },
-                            suggestedMin: 0,
-                            suggestedMax: 100,
-                            ticks: {
-                                stepSize: 20
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: { display: false }
-                    }
-                }
-            });
-
-            // Correlation Chart (Bar)
-            const correlationCtx = document.getElementById('correlationChart').getContext('2d');
-            correlationChart = new Chart(correlationCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['CAC', 'LTV', 'MRR成長', 'チャーン率', 'ARR', 'バーンレート'],
-                    datasets: [{
-                        label: '相対値',
-                        data: [60, 100, 80, -40, 580, -120],
+                        data: [78, 22],
                         backgroundColor: [
-                            'rgba(239, 68, 68, 0.7)',
-                            'rgba(16, 185, 129, 0.7)',
-                            'rgba(59, 130, 246, 0.7)',
-                            'rgba(245, 158, 11, 0.7)',
-                            'rgba(139, 92, 246, 0.7)',
-                            'rgba(236, 72, 153, 0.7)'
+                            'rgba(34, 197, 94, 0.8)',
+                            'rgba(229, 231, 235, 0.8)'
                         ],
-                        borderColor: [
-                            'rgba(239, 68, 68, 1)',
-                            'rgba(16, 185, 129, 1)',
-                            'rgba(59, 130, 246, 1)',
-                            'rgba(245, 158, 11, 1)',
-                            'rgba(139, 92, 246, 1)',
-                            'rgba(236, 72, 153, 1)'
-                        ],
-                        borderWidth: 1
+                        borderWidth: 0
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            min: -200,
-                            max: 600
-                        }
-                    },
+                    cutout: '75%',
                     plugins: {
-                        legend: { display: false }
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: false
+                        }
                     }
                 }
             });
         }
 
-        // Calculate PMF probability based on all factors
-        function calculatePMFProbability(productQuality, devEfficiency, cacEfficiency, ltvMax, scalability) {
-            // PMF達成確率の正確な計算式
-            const pmfScore = (productQuality * 0.30) + (cacEfficiency * 0.25) + (ltvMax * 0.25) + (devEfficiency * 0.20);
-            
-            // スケーラビリティボーナス
-            const scalabilityBonus = scalability * 0.1;
-            
-            const finalScore = Math.min(100, Math.max(0, pmfScore + scalabilityBonus));
-            
-            return Math.round(finalScore);
+        function updateAllScores() {
+            // トレンド適合性
+            const aiMlAdoption = parseFloat(document.getElementById('aiMlAdoption').value);
+            const cloudNative = parseFloat(document.getElementById('cloudNative').value);
+            const digitalTransformation = parseFloat(document.getElementById('digitalTransformation').value);
+            const technologyInnovation = parseFloat(document.getElementById('technologyInnovation').value);
+            const trendScore = (aiMlAdoption + cloudNative + digitalTransformation + technologyInnovation) / 4;
+
+            // ブランド力
+            const technicalReputation = parseFloat(document.getElementById('technicalReputation').value);
+            const marketDifferentiation = parseFloat(document.getElementById('marketDifferentiation').value);
+            const userSatisfaction = parseFloat(document.getElementById('userSatisfaction').value);
+            const industryTrust = parseFloat(document.getElementById('industryTrust').value);
+            const brandScore = (technicalReputation + marketDifferentiation + userSatisfaction + industryTrust) / 4;
+
+            // プロダクト・サービス力
+            const productQuality = parseFloat(document.getElementById('productQuality').value);
+            const userExperience = parseFloat(document.getElementById('userExperience').value);
+            const scalability = parseFloat(document.getElementById('scalability').value);
+            const innovation = parseFloat(document.getElementById('innovation').value);
+            const productScore = (productQuality + userExperience + scalability + innovation) / 4;
+
+            // 経営環境
+            const techInfrastructure = parseFloat(document.getElementById('techInfrastructure').value);
+            const devOpsCapability = parseFloat(document.getElementById('devOpsCapability').value);
+            const engineeringTalent = parseFloat(document.getElementById('engineeringTalent').value);
+            const securityReliability = parseFloat(document.getElementById('securityReliability').value);
+            const environmentScore = (techInfrastructure + devOpsCapability + engineeringTalent + securityReliability) / 4;
+
+            // 价格戦略
+            const pricePositioning = parseFloat(document.getElementById('pricePositioning').value);
+            const valueProposition = parseFloat(document.getElementById('valueProposition').value);
+            const pricingModel = parseFloat(document.getElementById('pricingModel').value);
+            const revenueOptimization = parseFloat(document.getElementById('revenueOptimization').value);
+            const pricingScore = (pricePositioning + valueProposition + pricingModel + revenueOptimization) / 4;
+
+            // コスト効率
+            const developmentCostEfficiency = parseFloat(document.getElementById('developmentCostEfficiency').value);
+            const infrastructureCost = parseFloat(document.getElementById('infrastructureCost').value);
+            const customerAcquisition = parseFloat(document.getElementById('customerAcquisition').value);
+            const automationEfficiency = parseFloat(document.getElementById('automationEfficiency').value);
+            const costScore = (developmentCostEfficiency + infrastructureCost + customerAcquisition + automationEfficiency) / 4;
+
+            // 総合スコア計算（重み付け - IT・SaaS業界特化）
+            const totalScore = (
+                trendScore * 0.25 +        // トレンド適合性: 25% (IT業界では最重要)
+                brandScore * 0.20 +        // ブランド力: 20%
+                productScore * 0.30 +      // プロダクト・サービス力: 30% (最重要)
+                environmentScore * 0.15 +  // 経営環境: 15%
+                pricingScore * 0.05 +      // 価格戦略: 5%
+                costScore * 0.05           // コスト効率: 5%
+            );
+
+            // 表示更新
+            document.getElementById('trendScore').textContent = trendScore.toFixed(1) + '%';
+            document.getElementById('brandScore').textContent = brandScore.toFixed(1) + '%';
+            document.getElementById('productScore').textContent = productScore.toFixed(1) + '%';
+            document.getElementById('environmentScore').textContent = environmentScore.toFixed(1) + '%';
+            document.getElementById('pricingScore').textContent = pricingScore.toFixed(1) + '%';
+            document.getElementById('costScore').textContent = costScore.toFixed(1) + '%';
+            document.getElementById('successRate').textContent = Math.round(totalScore) + '%';
+
+            // チャート更新
+            successChart.data.datasets[0].data = [totalScore, 100 - totalScore];
+            successChart.update();
+
+            // インサイト更新
+            updateInsights(trendScore, brandScore, productScore, environmentScore, pricingScore, costScore, totalScore);
         }
 
-        // Calculate profitability
-        function calculateProfitability(productQuality, devEfficiency, cacEfficiency, ltvMax, scalability) {
-            // LTV/CAC比率をベースとした収益性計算
-            const ltvCacRatio = (ltvMax / (101 - cacEfficiency)) * 2;
-            const efficiencyFactor = (devEfficiency + scalability) / 200;
-            const qualityPremium = productQuality * 0.5;
-            
-            const profitability = Math.min(100, Math.max(0, 
-                (ltvCacRatio * 15) + (efficiencyFactor * 30) + (qualityPremium * 0.4)
-            ));
-            
-            return Math.round(profitability);
-        }
+        function updateInsights(trend, brand, product, environment, pricing, cost, total) {
+            const scores = [
+                {name: 'トレンド適合性', score: trend},
+                {name: 'ブランド力', score: brand},
+                {name: 'プロダクト・サービス力', score: product},
+                {name: '経営環境', score: environment},
+                {name: '価格戦略', score: pricing},
+                {name: 'コスト効率', score: cost}
+            ];
 
-        // Calculate LTV/CAC ratio
-        function calculateLTVCACRatio(cacEfficiency, ltvMax) {
-            const cacValue = 101 - cacEfficiency; // Higher efficiency = lower CAC
-            const ltvValue = ltvMax;
-            const ratio = (ltvValue / cacValue) * 5; // Scale for realistic ratio
-            return Math.max(1, ratio).toFixed(1) + 'x';
-        }
+            const strongest = scores.reduce((a, b) => a.score > b.score ? a : b);
+            const weakest = scores.reduce((a, b) => a.score < b.score ? a : b);
 
-        // Calculate MRR growth
-        function calculateMRRGrowth(productQuality, devEfficiency, ltvMax) {
-            const baseGrowth = (productQuality + devEfficiency + ltvMax) / 300 * 100;
-            const growth = Math.max(-50, Math.min(200, baseGrowth - 20)); // Range: -50% to 200%
-            return (growth >= 0 ? '+' : '') + Math.round(growth) + '%';
-        }
+            document.getElementById('strengthAnalysis').innerHTML = 
+                `<p>${strongest.name}（${strongest.score.toFixed(1)}%）が最大の強み。この優位性を活かした戦略展開が重要。</p>`;
 
-        // Update all visualizations
-        function updateVisualizations() {
-            const productQuality = parseInt(document.getElementById('product-quality').value);
-            const devEfficiency = parseInt(document.getElementById('dev-efficiency').value);
-            const cacEfficiency = parseInt(document.getElementById('cac-efficiency').value);
-            const ltvMax = parseInt(document.getElementById('ltv-max').value);
-            const scalability = parseInt(document.getElementById('scalability').value);
-            
-            const profitability = calculateProfitability(productQuality, devEfficiency, cacEfficiency, ltvMax, scalability);
-            const pmfProbability = calculatePMFProbability(productQuality, devEfficiency, cacEfficiency, ltvMax, scalability);
-            
-            // Update value displays
-            document.getElementById('productQualityValue').textContent = productQuality;
-            document.getElementById('devEfficiencyValue').textContent = devEfficiency;
-            document.getElementById('cacEfficiencyValue').textContent = cacEfficiency;
-            document.getElementById('ltvMaxValue').textContent = ltvMax;
-            document.getElementById('scalabilityValue').textContent = scalability;
-            
-            // Update balance chart
-            balanceChart.data.datasets[0].data = [productQuality, devEfficiency, cacEfficiency, ltvMax, scalability, profitability];
-            balanceChart.update();
-            
-            // Update correlation data (SaaS metrics)
-            const cacValue = 101 - cacEfficiency; // Lower is better for CAC
-            const ltvValue = ltvMax * 10; // Scale for display
-            const mrrGrowth = (productQuality + devEfficiency + ltvMax) / 3 * 8 - 200; // -200 to +400 range
-            const churnRate = -(100 - productQuality - ltvMax/2) * 2; // Negative value
-            const arrValue = ltvValue * 6; // Annual Recurring Revenue
-            const burnRate = -cacValue * 2; // Negative value (cost)
-            
-            correlationChart.data.datasets[0].data = [cacValue, ltvValue, mrrGrowth, churnRate, arrValue, burnRate];
-            correlationChart.update();
-            
-            // Update PMF probability
-            document.getElementById('pmfRate').textContent = pmfProbability + '%';
-            
-            const pmfLabel = document.getElementById('pmfLabel');
-            if (pmfProbability >= 80) {
-                pmfLabel.textContent = 'PMF達成';
-                pmfLabel.className = 'inline-block px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800';
-            } else if (pmfProbability >= 60) {
-                pmfLabel.textContent = '良好';
-                pmfLabel.className = 'inline-block px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800';
-            } else {
-                pmfLabel.textContent = '要改善';
-                pmfLabel.className = 'inline-block px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800';
+            document.getElementById('improvementAnalysis').innerHTML = 
+                `<p>${weakest.name}（${weakest.score.toFixed(1)}%）の改善が優先課題。収益達成可能性向上の鍵となる領域。</p>`;
+
+            // 推奨アクション更新
+            let actions = [];
+            if (trend < 80) actions.push('• AI・機械学習とクラウドネイティブ技術の先行導入');
+            if (brand < 80) actions.push('• 技術力のブランド化と市場での差別化戦略強化');
+            if (product < 85) actions.push('• プロダクト品質向上とユーザー体験の革新');
+            if (environment < 80) actions.push('• テクノロジー基盤強化と開発体制最適化');
+            if (pricing < 80) actions.push('• 価値ベース価格戦略とLTV最大化');
+            if (cost < 75) actions.push('• 開発効率化とCAC削減による収益性向上');
+
+            if (actions.length === 0) {
+                actions.push('• 現在の技術優位性維持と次世代技術への投資');
+                actions.push('• グローバル展開と新市場セグメントへの進出');
             }
-            
-            // Update LTV/CAC ratio and MRR growth
-            document.getElementById('ltvCacRatio').textContent = calculateLTVCACRatio(cacEfficiency, ltvMax);
-            document.getElementById('mrrGrowth').textContent = calculateMRRGrowth(productQuality, devEfficiency, ltvMax);
-            
-            // Update recommendations
-            updateRecommendations(productQuality, devEfficiency, cacEfficiency, ltvMax, scalability, pmfProbability);
+
+            document.getElementById('recommendedActions').innerHTML = 
+                actions.map(action => `<div>${action}</div>`).join('');
         }
 
-        // Generate strategic recommendations
-        function updateRecommendations(productQuality, devEfficiency, cacEfficiency, ltvMax, scalability, pmfProbability) {
-            const recommendations = [];
-            
-            if (pmfProbability < 50) {
-                recommendations.push({
-                    icon: 'fas fa-exclamation-triangle',
-                    type: 'warning',
-                    title: 'PMF達成が急務',
-                    text: 'プロダクト品質とCAC効率の改善に集中してください。'
-                });
-            }
-            
-            if (productQuality > 80 && cacEfficiency < 40) {
-                recommendations.push({
-                    icon: 'fas fa-bullseye',
-                    type: 'warning',
-                    title: 'マーケティング効率化',
-                    text: '優秀なプロダクトを活かし、CAC効率を改善してスケールを狙いましょう。'
-                });
-            }
-            
-            if (ltvMax > 70 && cacEfficiency > 70) {
-                recommendations.push({
-                    icon: 'fas fa-rocket',
-                    type: 'success',
-                    title: 'スケール準備完了',
-                    text: '優秀なユニットエコノミクス！積極的な成長投資のタイミングです。'
-                });
-            }
-            
-            if (devEfficiency < 50) {
-                recommendations.push({
-                    icon: 'fas fa-cogs',
-                    type: 'info',
-                    title: '開発プロセス改善',
-                    text: 'DevOps、CI/CD導入で開発効率を向上させ、市場投入速度を上げましょう。'
-                });
-            }
-            
-            if (scalability < 40 && pmfProbability > 70) {
-                recommendations.push({
-                    icon: 'fas fa-expand-arrows-alt',
-                    type: 'warning',
-                    title: 'インフラ強化必要',
-                    text: 'PMFに近づいています。スケーラビリティ向上で成長に備えてください。'
-                });
-            }
-            
-            const ltvCacRatio = parseFloat(calculateLTVCACRatio(cacEfficiency, ltvMax));
-            if (ltvCacRatio < 3.0) {
-                recommendations.push({
-                    icon: 'fas fa-chart-line',
-                    type: 'warning',
-                    title: 'ユニットエコノミクス改善',
-                    text: 'LTV/CAC比率3.0以上を目指し、持続的成長モデルを構築してください。'
-                });
-            }
-            
-            const recommendationsHtml = recommendations.map(rec => `
-                <div class="flex items-start p-3 rounded-lg ${rec.type === 'success' ? 'bg-green-50 border-l-4 border-green-400' : 
-                    rec.type === 'warning' ? 'bg-yellow-50 border-l-4 border-yellow-400' : 'bg-blue-50 border-l-4 border-blue-400'}">
-                    <i class="${rec.icon} ${rec.type === 'success' ? 'text-green-600' : 
-                        rec.type === 'warning' ? 'text-yellow-600' : 'text-blue-600'} mt-1 mr-3"></i>
-                    <div>
-                        <h4 class="font-medium ${rec.type === 'success' ? 'text-green-800' : 
-                            rec.type === 'warning' ? 'text-yellow-800' : 'text-blue-800'}">${rec.title}</h4>
-                        <p class="text-sm ${rec.type === 'success' ? 'text-green-700' : 
-                            rec.type === 'warning' ? 'text-yellow-700' : 'text-blue-700'} mt-1">${rec.text}</p>
-                    </div>
-                </div>
-            `).join('');
-            
-            document.getElementById('recommendations').innerHTML = recommendationsHtml;
-        }
-
-        // Scenario management functions
-        function saveScenario() {
-            const name = prompt('シナリオ名を入力してください:');
-            if (!name) return;
-            
-            const scenario = {
-                name: name,
-                timestamp: new Date().toLocaleString(),
-                values: {
-                    productQuality: parseInt(document.getElementById('product-quality').value),
-                    devEfficiency: parseInt(document.getElementById('dev-efficiency').value),
-                    cacEfficiency: parseInt(document.getElementById('cac-efficiency').value),
-                    ltvMax: parseInt(document.getElementById('ltv-max').value),
-                    scalability: parseInt(document.getElementById('scalability').value)
-                }
-            };
-            
-            scenarios.push(scenario);
-            localStorage.setItem('saasScenarios', JSON.stringify(scenarios));
-            updateScenarioSelect();
-            alert('シナリオが保存されました！');
-        }
-
-        function loadScenario() {
-            const select = document.getElementById('scenarioSelect');
-            const selectedIndex = select.selectedIndex - 1;
-            
-            if (selectedIndex >= 0 && scenarios[selectedIndex]) {
-                const scenario = scenarios[selectedIndex];
-                document.getElementById('product-quality').value = scenario.values.productQuality;
-                document.getElementById('dev-efficiency').value = scenario.values.devEfficiency;
-                document.getElementById('cac-efficiency').value = scenario.values.cacEfficiency;
-                document.getElementById('ltv-max').value = scenario.values.ltvMax;
-                document.getElementById('scalability').value = scenario.values.scalability;
-                updateVisualizations();
-            }
-        }
-
-        function clearScenarios() {
-            if (confirm('全てのシナリオを削除しますか？')) {
-                scenarios = [];
-                localStorage.removeItem('saasScenarios');
-                updateScenarioSelect();
-                alert('全シナリオが削除されました。');
-            }
-        }
-
-        function updateScenarioSelect() {
-            const select = document.getElementById('scenarioSelect');
-            select.innerHTML = '<option value="">保存済みシナリオを選択</option>';
-            scenarios.forEach((scenario, index) => {
-                const option = document.createElement('option');
-                option.value = index;
-                option.textContent = `${scenario.name} (${scenario.timestamp})`;
-                select.appendChild(option);
-            });
-        }
-
-        // Event listeners
+        // イベントリスナー設定
         document.addEventListener('DOMContentLoaded', function() {
-            initCharts();
-            updateScenarioSelect();
-            updateVisualizations();
+            initializeChart();
             
-            // Add event listeners to all sliders
-            ['product-quality', 'dev-efficiency', 'cac-efficiency', 'ltv-max', 'scalability'].forEach(id => {
-                document.getElementById(id).addEventListener('input', updateVisualizations);
+            const sliders = document.querySelectorAll('input[type="range"]');
+            sliders.forEach(slider => {
+                // 初期値表示
+                const valueElement = document.getElementById(slider.id + 'Value');
+                if (valueElement) {
+                    valueElement.textContent = slider.value + '%';
+                }
+                
+                // スライダー変更時の処理
+                slider.addEventListener('input', function() {
+                    const valueElement = document.getElementById(this.id + 'Value');
+                    if (valueElement) {
+                        valueElement.textContent = this.value + '%';
+                    }
+                    updateAllScores();
+                });
             });
+
+            // 初期計算
+            updateAllScores();
         });
     </script>
 </body>
 </html>
-    <script id="html_badge_script1">
-        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
-            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDj3hnTmx5XHUgmgmzTVVLVYK2brTL21vSWFJzMt%2FqPPbQeMKsF0Uj4Vciu0l%2FgFJHaWqLWtCKQJYueJS9aZnihW5neUGVHBrv2fHqKwtLk0x8sI8tbAGzd6EcAGEHX1BO3qrzDtYOFuI2c7YTqFp9MaAoWr7r3PtsZ1adzcgz3EzWgY4RY8mOPmXtWYvFacLaM9gApXX%2B5vswMnKUycMT3l2NtlxJlg%2FFVTF73koAfihotWurMiCQJqHuRPvV9Sc3cKMtVY0j5J6Cxav5T7UPcAvMQPgHn7xEPDEsAcmrmuLrRHBd7nC3LOa3zgQc9lZW63i2Tpj7M6HiagFW7BWnAReFYPkc1kkpkeyGcQuWDyzcVeSu5az6PgVbvuN0hJO%2B8Li9%2B9VtGIDZIAQTDbpzl8%2FfCJwGR5Hv3tSYfz3%2F7n9EvH0qOYrnxlU%2FLtkNDPU91U8LK%2B9S3hFzHnUPIpOJiJjAPVuS%2By7%2FzJUTk%2BWOjubga6R24rSLm9p%2Fxb%2BkGUFhVEWk7RUSmXcxayEiacuQcEYsfm9u1DSKkpMJBmRfZ6B";
-        window.__genspark_locale = "ja-JP";
-        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDj3hnTmx5XHUgmgmzTVVLVYK2brTL21vSWFJzMt/qPPbQeMKsF0Uj4Vciu0l/gFJHaWqLWtCKQJYueJS9aZnihW5neUGVHBrv2fHqKwtLk0x8sI8tbAGzd6EcAGEHX1BO3qrzDtYOFuI2c7YTqFp9MaAoWr7r3PtsZ1adzcgz3EzWgY4RY8mOPmXtWYvFacLaM9gApXX+5vswMnKUycMT3l2NtlxJlg/FVTF73koAfihotWurMiCQJqHuRPvV9Sc3cKMtVY0j5J6Cxav5T7UPcAvMQPgHn7xEPDEsAcmrmuLrRHBd7nC3LOa3zgQc9lZW63i2Tpj7M6HiagFW7BWnAReFYPkc1kkpkeyGcQuWDyzcVeSu5az6PgVbvuN0hJO+8Li9+9VtGIDZIAQTDbpzl8/fCJwGR5Hv3tSYfz3/7n9EvH0qOYrnxlU/LtkNDPU91U8LK+9S3hFzHnUPIpOJiJjAPVuS+y7/zJUTk+WOjubga6R24rSLm9p/xb+kGUFhVEWk7RUSmXcxayEiacuQcEYsfm9u1DSKkpMJBmRfZ6B";
-    </script>
-    
-    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
-    
